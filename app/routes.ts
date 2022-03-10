@@ -28,6 +28,20 @@ const exampleEmbed = (request: Cast, random: number) => {
         title: text[request.token_offset - 1].title + " : " + request.token_amount,
         description: text[request.token_offset - 1].description,
         color: colours[request.token_offset - 1],
+        fields: [
+            {
+                name: 'City Health',
+                value: request.city_health,
+            },
+            {
+                name: 'Shield Health',
+                value: request.shield_health
+            },
+            {
+                name: 'Game ID',
+                value: request.game_idx
+            },
+        ],
         image: {
             url: 'attachment://' + images[request.token_offset - 1][random],
         },
