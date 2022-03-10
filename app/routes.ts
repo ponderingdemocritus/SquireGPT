@@ -46,7 +46,7 @@ routes.post('/action', (req: Action, res: any) => {
 
     const file = new MessageAttachment('app/img/' + images[req.body.token_offset - 1][num]);
 
-    client.channels.fetch(channel[0])
+    client.channels.fetch(channel[req.body.token_offset - 1])
         .then((channel: any) => {
             channel.send({ embeds: [exampleEmbed(req.body, num)], files: [file] });
         })
