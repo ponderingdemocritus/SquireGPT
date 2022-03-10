@@ -25,26 +25,26 @@ const channel = ["951288986389864469", "951253679464394812"] // light 0, dark 1
 
 const exampleEmbed = (request: Cast, random: number) => {
     return {
-        title: text[request.token_offset].title + " : " + request.token_amount,
-        description: text[request.token_offset].description,
-        color: colours[request.token_offset],
+        title: text[request.token_offset - 1].title + " : " + request.token_amount,
+        description: text[request.token_offset - 1].description,
+        color: colours[request.token_offset - 1],
         image: {
-            url: 'attachment://' + images[request.token_offset][random],
+            url: 'attachment://' + images[request.token_offset - 1][random],
         },
         timestamp: new Date(),
         url: 'https://beta.bibliothecadao.xyz/desiege',
     }
 };
 
-routes.get('/action', (req: Action, res: any) => {
+routes.post('/action', (req: Action, res: any) => {
     let num = 0
     const getRandomInt = () => {
-        num = Math.floor(Math.random() * images.length) - 1;
+        num = Math.floor(Math.random() * images[req.body.token_offset - 1].length) - 1;
     }
 
     getRandomInt()
 
-    const file = new MessageAttachment('app/img/' + images[req.body.token_offset][num]);
+    const file = new MessageAttachment('app/img/' + images[req.body.token_offset - 1][num]);
 
     client.channels.fetch(channel[0])
         .then((channel: any) => {

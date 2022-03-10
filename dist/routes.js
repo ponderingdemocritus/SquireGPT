@@ -12,23 +12,23 @@ const routes = (0, express_1.Router)();
 const channel = ["951288986389864469", "951253679464394812"]; // light 0, dark 1
 const exampleEmbed = (request, random) => {
     return {
-        title: desiege_1.text[request.token_offset].title + " : " + request.token_amount,
-        description: desiege_1.text[request.token_offset].description,
-        color: desiege_1.colours[request.token_offset],
+        title: desiege_1.text[request.token_offset - 1].title + " : " + request.token_amount,
+        description: desiege_1.text[request.token_offset - 1].description,
+        color: desiege_1.colours[request.token_offset - 1],
         image: {
-            url: 'attachment://' + desiege_1.images[request.token_offset][random],
+            url: 'attachment://' + desiege_1.images[request.token_offset - 1][random],
         },
         timestamp: new Date(),
         url: 'https://beta.bibliothecadao.xyz/desiege',
     };
 };
-routes.get('/action', (req, res) => {
+routes.post('/action', (req, res) => {
     let num = 0;
     const getRandomInt = () => {
-        num = Math.floor(Math.random() * desiege_1.images.length) - 1;
+        num = Math.floor(Math.random() * desiege_1.images[req.body.token_offset - 1].length) - 1;
     };
     getRandomInt();
-    const file = new discord_js_1.MessageAttachment('app/img/' + desiege_1.images[req.body.token_offset][num]);
+    const file = new discord_js_1.MessageAttachment('app/img/' + desiege_1.images[req.body.token_offset - 1][num]);
     client_1.default.channels.fetch(channel[0])
         .then((channel) => {
         channel.send({ embeds: [exampleEmbed(req.body, num)], files: [file] });
