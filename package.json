@@ -18,6 +18,9 @@
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "start": "yarn build-ts && npm run serve",
     "serve": "node dist/server.js",
