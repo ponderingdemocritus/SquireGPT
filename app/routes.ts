@@ -21,7 +21,7 @@ const routes = Router();
 
 
 
-const channel = ["951288986389864469", "951253679464394812"] // light 0, dark 1
+const channel = ["951253679464394812", "951288986389864469"] // light 0, dark 1
 
 const exampleEmbed = (request: Cast, random: number) => {
     return {
