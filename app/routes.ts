@@ -23,27 +23,27 @@ const routes = Router();
 
 const channel = ["951253679464394812", "951288986389864469"] // light 0, dark 1
 
-const exampleEmbed = (request: Cast, random: number) => {
+const exampleEmbed = (request: Cast, random: number, offset: number) => {
     return {
-        title: text[request.token_offset - 1].title + " : " + request.token_amount,
-        description: text[request.token_offset - 1].description,
-        color: colours[request.token_offset - 1],
+        title: text[offset].title + " : " + request.token_amount,
+        description: text[offset].description,
+        color: colours[offset],
         fields: [
             {
                 name: 'City Health',
-                value: request.city_health || 0
+                value: request.city_health.toString() || "0"
             },
             {
                 name: 'Shield Health',
-                value: request.shield_health || 0
+                value: request.shield_health.toString() || "0"
             },
             {
                 name: 'Game ID',
-                value: request.game_idx || 0
+                value: request.game_idx.toString() || "0"
             },
         ],
         image: {
-            url: 'attachment://' + images[request.token_offset - 1][random],
+            url: 'attachment://' + images[offset][random],
         },
         timestamp: new Date(),
         url: 'https://beta.bibliothecadao.xyz/desiege',
@@ -51,18 +51,23 @@ const exampleEmbed = (request: Cast, random: number) => {
 };
 
 routes.post('/action', (req: Action, res: any) => {
+    const offset = req.body.token_offset - 1
+
     let num = 0
     const getRandomInt = () => {
-        num = Math.floor(Math.random() * images[req.body.token_offset - 1].length) - 1;
+        num = Math.floor(Math.random() * (images[offset].length - 1));
     }
 
     getRandomInt()
 
-    const file = new MessageAttachment('app/img/' + images[req.body.token_offset - 1][num]);
+    console.log(num)
+    console.log(offset)
 
-    client.channels.fetch(channel[req.body.token_offset - 1])
+    const file = new MessageAttachment('app/img/' + images[offset][num]);
+
+    client.channels.fetch(channel[offset])
         .then((channel: any) => {
-            channel.send({ embeds: [exampleEmbed(req.body, num)], files: [file] });
+            channel.send({ embeds: [exampleEmbed(req.body, num, offset)], files: [file] });
         })
         .catch(console.error);
 
