@@ -31,15 +31,15 @@ const exampleEmbed = (request: Cast, random: number) => {
         fields: [
             {
                 name: 'City Health',
-                value: request.city_health,
+                value: request.city_health || 0
             },
             {
                 name: 'Shield Health',
-                value: request.shield_health
+                value: request.shield_health || 0
             },
             {
                 name: 'Game ID',
-                value: request.game_idx
+                value: request.game_idx || 0
             },
         ],
         image: {
