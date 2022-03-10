@@ -12,10 +12,14 @@ const routes = (0, express_1.Router)();
 const channel = ["951253679464394812", "951288986389864469"]; // light 0, dark 1
 const exampleEmbed = (request, random, offset) => {
     return {
-        title: desiege_1.text[offset].title + " : " + request.token_amount,
+        title: desiege_1.text[offset].title + " : " + (request.token_amount * (request.token_boost / 1000 + 1)),
         description: desiege_1.text[offset].description,
         color: desiege_1.colours[offset],
         fields: [
+            {
+                name: 'Boost',
+                value: (request.token_boost / 1000 + 1).toString() || "0"
+            },
             {
                 name: 'City Health',
                 value: request.city_health.toString() || "0"
