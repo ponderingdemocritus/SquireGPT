@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.colours = exports.text = void 0;
+exports.images = exports.colours = exports.text = void 0;
 exports.text = [
     {
         title: "⚡️ The Light Boosts",
@@ -12,4 +12,24 @@ exports.text = [
     },
 ];
 exports.colours = ["#FFF", "#000"];
+exports.images = [
+    [
+        "aragon.gif",
+        "gandalf-defence.gif",
+        "gandalf.gif",
+        "obi-wan-2.gif",
+        "obi-wan.gif",
+        "shield.gif",
+        "witcher.gif",
+    ],
+    [
+        "witch-king.gif",
+        "emperor.gif",
+        "emperor-power.gif",
+        "emperor-power.gif",
+        "emperor-death.gif",
+        "emperor-cackles.gif",
+        "darth.gif",
+    ],
+];
 //# sourceMappingURL=desiege.js.map

@@ -1,8 +1,7 @@
 export const text = [
     {
         title: "⚡️ The Light Boosts",
-        description:
-            "The Mages Boosted the Shield.",
+        description: "The Mages Boosted the Shield.",
     },
     {
         title: "The Dark Attacks",
@@ -12,3 +11,24 @@ export const text = [
 ];
 
 export const colours = ["#FFF", "#000"];
+
+export const images = [
+    [
+        "aragon.gif",
+        "gandalf-defence.gif",
+        "gandalf.gif",
+        "obi-wan-2.gif",
+        "obi-wan.gif",
+        "shield.gif",
+        "witcher.gif",
+    ],
+    [
+        "witch-king.gif",
+        "emperor.gif",
+        "emperor-power.gif",
+        "emperor-power.gif",
+        "emperor-death.gif",
+        "emperor-cackles.gif",
+        "darth.gif",
+    ],
+];
