@@ -40,3 +40,7 @@ export const images = [
         "harkonn.gif",
     ],
 ];
+
+export const final = [
+    ['death.gif']
+]

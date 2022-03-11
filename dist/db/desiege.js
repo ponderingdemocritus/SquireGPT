@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.images = exports.colours = exports.text = void 0;
+exports.final = exports.images = exports.colours = exports.text = void 0;
 exports.text = [
     {
         title: "⚡ Light Boosts",
@@ -39,5 +39,8 @@ exports.images = [
         "barron.gif",
         "harkonn.gif",
     ],
+];
+exports.final = [
+    ['death.gif']
 ];
 //# sourceMappingURL=desiege.js.map

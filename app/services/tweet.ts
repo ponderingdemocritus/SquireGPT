@@ -1,6 +1,6 @@
 import twit from 'twit';
 import fs from 'fs'
-import { text, images } from '../db/desiege';
+import { text, images, final } from '../db/desiege';
 import { twitterConfig } from '../config/config'
 import { Cast } from '../types';
 
@@ -8,7 +8,16 @@ const twitterClient = new twit(twitterConfig);
 
 export async function tweet(body: Cast, offset: number, random: number) {
 
-    var b64content = fs.readFileSync('app/img/' + images[offset][random], { encoding: 'base64' })
+    let b64content: any
+    let description: any
+
+    if (body.city_health === 0) {
+        b64content = fs.readFileSync('app/img/' + final[0][0], { encoding: 'base64' })
+        description = 'The Divine City has been destroyed'
+    } else {
+        b64content = fs.readFileSync('app/img/' + images[offset][random], { encoding: 'base64' })
+        description = text[offset].description
+    }
 
     let cityHealth = "🏰 City Health: " + body.city_health.toString()
 
@@ -16,7 +25,9 @@ export async function tweet(body: Cast, offset: number, random: number) {
 
     let heading = text[offset].title + ": " + (body.token_amount * (body.token_boost / 1000 + 1))
 
-    var msg = heading + "\n \n" + cityHealth + "\n \n" + shieldHealth
+
+
+    let msg = description + "\n \n \n" + heading + "\n \n" + cityHealth + "\n \n" + shieldHealth
 
     twitterClient.post('media/upload', { media_data: b64content }, function (_err, data: any, _response) {
 
