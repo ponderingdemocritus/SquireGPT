@@ -21,6 +21,11 @@ export const images = [
         "obi-wan.gif",
         "shield.gif",
         "witcher.gif",
+        "luke-1.gif",
+        "luke-2.gif",
+        "duke-1.gif",
+        "duke-2.gif",
+        "light-1.gif",
     ],
     [
         "witch-king.gif",
@@ -30,5 +35,8 @@ export const images = [
         "emperor-death.gif",
         "emperor-cackles.gif",
         "darth.gif",
+        "darth-2.gif",
+        "barron.gif",
+        "harkonn.gif",
     ],
 ];
