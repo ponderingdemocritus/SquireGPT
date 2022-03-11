@@ -14,7 +14,7 @@ export async function tweet(body: Cast, offset: number, random: number) {
 
     let shieldHealth = "✨ Shield Health: " + body.shield_health.toString()
 
-    let heading = text[offset].title + ": " + (body.token_amount * (body.token_boost / 10000 + 1))
+    let heading = text[offset].title + ": " + (body.token_amount * (body.token_boost / 1000 + 1))
 
     var msg = heading + "\n \n" + cityHealth + "\n \n" + shieldHealth
 

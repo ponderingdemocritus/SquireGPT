@@ -12,13 +12,13 @@ const channel = ["951253679464394812", "951288986389864469"] // light 0, dark 1
 
 const embed = (request: Cast, random: number, offset: number) => {
     return {
-        title: text[offset].title + " : " + (request.token_amount * (request.token_boost / 10000 + 1)),
+        title: text[offset].title + " : " + (request.token_amount * (request.token_boost / 1000 + 1)),
         description: text[offset].description,
         color: colours[offset],
         fields: [
             {
                 name: 'Boost',
-                value: (request.token_boost / 10000 + 1).toString() || "0"
+                value: (request.token_boost / 1000 + 1).toString() || "0"
             },
             {
                 name: 'City Health',
