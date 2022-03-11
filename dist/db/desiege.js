@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.images = exports.colours = exports.text = void 0;
 exports.text = [
     {
-        title: "⚡️ Light Boosts",
+        title: "⚡ Light Boosts",
         description: "The Mages Boosted the Shield.",
     },
     {
-        title: "Dark Attacks",
+        title: "👺 Dark Attacks",
         description: "Monolithic shadows casted over flesh. Standing at the gates, leaving hell behind is my last bet.",
     },
 ];

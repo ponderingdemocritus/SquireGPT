@@ -8,17 +8,18 @@ const express_1 = require("express");
 const client_1 = __importDefault(require("./client"));
 const discord_js_1 = require("discord.js");
 const desiege_1 = require("./db/desiege");
+const tweet_1 = require("./services/tweet");
 const routes = (0, express_1.Router)();
 const channel = ["951253679464394812", "951288986389864469"]; // light 0, dark 1
-const exampleEmbed = (request, random, offset) => {
+const embed = (request, random, offset) => {
     return {
-        title: desiege_1.text[offset].title + " : " + (request.token_amount * (request.token_boost / 1000 + 1)),
+        title: desiege_1.text[offset].title + " : " + (request.token_amount * (request.token_boost / 10000 + 1)),
         description: desiege_1.text[offset].description,
         color: desiege_1.colours[offset],
         fields: [
             {
                 name: 'Boost',
-                value: (request.token_boost / 1000 + 1).toString() || "0"
+                value: (request.token_boost / 10000 + 1).toString() || "0"
             },
             {
                 name: 'City Health',
@@ -50,9 +51,11 @@ routes.post('/action', (req, res) => {
     console.log(num);
     console.log(offset);
     const file = new discord_js_1.MessageAttachment('app/img/' + desiege_1.images[offset][num]);
+    // tweet
+    (0, tweet_1.tweet)(req.body, offset, num);
     client_1.default.channels.fetch(channel[offset])
         .then((channel) => {
-        channel.send({ embeds: [exampleEmbed(req.body, num, offset)], files: [file] });
+        channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
     })
         .catch(console.error);
     res.send("hello");

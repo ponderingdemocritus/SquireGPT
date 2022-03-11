@@ -9,6 +9,7 @@
     "@discordjs/rest": "^0.3.0",
     "@types/express": "^4.17.13",
     "@types/node": "^16.11.6",
+    "@types/twit": "^2.2.30",
     "body-parser": "^1.19.1",
     "discord-api-types": "^0.28.0",
     "discord.js": "^13.6.0",
@@ -16,6 +17,7 @@
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
+    "twit": "^2.2.11",
     "typescript": "^4.4.4"
   },
   "engines": {

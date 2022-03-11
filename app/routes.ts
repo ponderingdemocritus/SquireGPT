@@ -3,27 +3,14 @@ import { Router } from 'express';
 import client from './client';
 import { MessageAttachment } from 'discord.js';
 import { colours, text, images } from './db/desiege';
-
-interface Action {
-    body: Cast
-}
-
-interface Cast {
-    token_amount: number
-    token_offset: number
-    token_boost: number
-    game_idx: number
-    city_health: number
-    shield_health: number
-}
+import { tweet } from './services/tweet'
+import { Cast, Action } from './types';
 
 const routes = Router();
 
-
-
 const channel = ["951253679464394812", "951288986389864469"] // light 0, dark 1
 
-const exampleEmbed = (request: Cast, random: number, offset: number) => {
+const embed = (request: Cast, random: number, offset: number) => {
     return {
         title: text[offset].title + " : " + (request.token_amount * (request.token_boost / 10000 + 1)),
         description: text[offset].description,
@@ -55,6 +42,8 @@ const exampleEmbed = (request: Cast, random: number, offset: number) => {
 };
 
 routes.post('/action', (req: Action, res: any) => {
+
+
     const offset = req.body.token_offset - 1
 
     let num = 0
@@ -69,9 +58,12 @@ routes.post('/action', (req: Action, res: any) => {
 
     const file = new MessageAttachment('app/img/' + images[offset][num]);
 
+    // tweet
+    tweet(req.body, offset, num)
+
     client.channels.fetch(channel[offset])
         .then((channel: any) => {
-            channel.send({ embeds: [exampleEmbed(req.body, num, offset)], files: [file] });
+            channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
         })
         .catch(console.error);
 
