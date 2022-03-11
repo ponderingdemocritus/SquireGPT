@@ -1,6 +1,6 @@
 require('dotenv').config();
 import { Router } from 'express';
-import client from './client';
+import client from './services/client';
 import { MessageAttachment } from 'discord.js';
 import { colours, text, images } from './db/desiege';
 import { tweet } from './services/tweet'
@@ -52,10 +52,6 @@ routes.post('/action', (req: Action, res: any) => {
     }
 
     getRandomInt()
-
-    console.log(num)
-    console.log(offset)
-
     const file = new MessageAttachment('app/img/' + images[offset][num]);
 
     // tweet
@@ -67,8 +63,7 @@ routes.post('/action', (req: Action, res: any) => {
         })
         .catch(console.error);
 
-    res.send("hello");
-    console.log(req.body);
+    res.send("YESS!!!");
 });
 
 export default routes

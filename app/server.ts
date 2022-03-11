@@ -1,7 +1,7 @@
 require('dotenv').config();
 import express from 'express';
 import routes from './routes'
-import client from './client';
+import client from './services/client';
 
 const app = express();
 const port = 3000;

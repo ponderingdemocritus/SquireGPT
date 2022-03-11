@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 const express_1 = require("express");
-const client_1 = __importDefault(require("./client"));
+const client_1 = __importDefault(require("./services/client"));
 const discord_js_1 = require("discord.js");
 const desiege_1 = require("./db/desiege");
 const tweet_1 = require("./services/tweet");
@@ -48,8 +48,6 @@ routes.post('/action', (req, res) => {
         num = Math.floor(Math.random() * (desiege_1.images[offset].length - 1));
     };
     getRandomInt();
-    console.log(num);
-    console.log(offset);
     const file = new discord_js_1.MessageAttachment('app/img/' + desiege_1.images[offset][num]);
     // tweet
     (0, tweet_1.tweet)(req.body, offset, num);
@@ -58,8 +56,7 @@ routes.post('/action', (req, res) => {
         channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
     })
         .catch(console.error);
-    res.send("hello");
-    console.log(req.body);
+    res.send("YESS!!!");
 });
 exports.default = routes;
 //# sourceMappingURL=routes.js.map
