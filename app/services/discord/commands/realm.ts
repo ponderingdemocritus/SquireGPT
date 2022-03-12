@@ -30,12 +30,12 @@ const fetchRealm = async (id: number) => {
     fields: [
       {
         name: "RARITY RANK",
-        value: realm.rarityScore.toString() || "0" + " / 7",
+        value: realm.rarityRank.toString() || "0",
         inline: true,
       },
       {
         name: "RARITY SCORE",
-        value: realm.rarityRank.toString() || "0" + " / 21",
+        value: realm.rarityScore.toString() || "0",
         inline: true,
       },
       {
