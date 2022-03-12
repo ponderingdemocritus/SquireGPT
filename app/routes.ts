@@ -1,9 +1,9 @@
 require('dotenv').config();
 import { Router } from 'express';
-import client from './services/client';
+import client from './services/discord';
 import { MessageAttachment } from 'discord.js';
 import { colours, text, images, final } from './db/desiege';
-import { tweet } from './services/tweet'
+import { tweet } from './services/twitter/tweet'
 import { Cast, Action } from './types';
 
 const routes = Router();

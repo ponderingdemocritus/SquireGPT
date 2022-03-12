@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 const express_1 = require("express");
-const client_1 = __importDefault(require("./services/client"));
+const discord_1 = __importDefault(require("./services/discord"));
 const discord_js_1 = require("discord.js");
 const desiege_1 = require("./db/desiege");
-const tweet_1 = require("./services/tweet");
+const tweet_1 = require("./services/twitter/tweet");
 const routes = (0, express_1.Router)();
 const channel = ["951253679464394812", "951288986389864469"]; // light 0, dark 1
 const embed = (request, random, offset) => {
@@ -71,7 +71,7 @@ routes.post('/action', (req, res) => {
     }
     // tweet
     (0, tweet_1.tweet)(req.body, offset, num);
-    client_1.default.channels.fetch(channel[offset])
+    discord_1.default.channels.fetch(channel[offset])
         .then((channel) => {
         channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
     })

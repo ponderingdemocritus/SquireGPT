@@ -10,3 +10,7 @@ export interface Cast {
     city_health: number
     shield_health: number
 }
+
+export interface DiscordMessage {
+    channel: any
+}

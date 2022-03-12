@@ -1,8 +1,8 @@
 import twit from 'twit';
 import fs from 'fs'
-import { text, images, final } from '../db/desiege';
-import { twitterConfig } from '../config/config'
-import { Cast } from '../types';
+import { text, images, final } from '../../db/desiege';
+import { twitterConfig } from '../../config'
+import { Cast } from '../../types';
 
 const twitterClient = new twit(twitterConfig);
 
