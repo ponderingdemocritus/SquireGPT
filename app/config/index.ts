@@ -12,3 +12,9 @@ export const discordConfig = {
     guild_id: process.env.DISCORD_GUILD_ID || "",
     token: process.env.DISCORD_TOKEN || ""
 }
+
+export const openSeaConfig = {
+    "prefix": "!",
+    "openseaAssetUrl": "https://api.opensea.io/api/v1/asset",
+    "openseaEventsUrl": "https://api.opensea.io/api/v1/events"
+}

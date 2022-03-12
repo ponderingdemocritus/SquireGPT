@@ -19,4 +19,3 @@ export const setupDiscordCommands = () => {
         .then(() => console.log('Successfully registered application commands.'))
         .catch(console.error);
 }
-

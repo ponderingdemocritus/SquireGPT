@@ -1,6 +1,9 @@
 import { Client, Intents, Collection } from "discord.js";
 import fs from "fs";
 import { discordConfig } from "../../config";
+// import cron from 'node-cron'
+// import sales from "./cron/sales";
+
 
 const client = new Client({
     intents: [
@@ -9,6 +12,8 @@ const client = new Client({
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
     ],
 });
+
+
 
 client.commands = new Collection();
 
@@ -22,6 +27,9 @@ client.once("ready", () => {
         const command = require(`./commands/${name}`);
         client.commands.set(command.data.name, command);
     }
+    // cron.schedule('* * * * * *', () => {
+    //     // sales.execute(client)
+    // });
 });
 
 client.on("interactionCreate", async (interaction) => {
