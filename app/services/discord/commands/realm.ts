@@ -1,24 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { request, gql } from "graphql-request";
+import { request } from "graphql-request";
 import { resources } from "../../../db/resources";
-
-const query = gql`
-  query getRealm($id: String!) {
-    realm(id: $id) {
-      id
-      resourceIds
-      order
-      wonder
-      cities
-      harbours
-      rivers
-      regions
-      name
-      rarityScore
-      rarityRank
-    }
-  }
-`;
+import { getRealm } from '../../graphql'
 
 const fetchRealm = async (id: number) => {
   const variables = {
@@ -26,7 +9,7 @@ const fetchRealm = async (id: number) => {
   };
   const { realm } = await request(
     "https://api.thegraph.com/subgraphs/name/bibliothecaforadventurers/realms",
-    query,
+    getRealm,
     variables
   );
 
@@ -35,8 +18,6 @@ const fetchRealm = async (id: number) => {
     .map((a: any) => {
       return a.trait;
     }).join(' | ');
-
-  console.log(resourceString);
 
   return {
     title: realm.name,
@@ -100,6 +81,16 @@ const fetchRealm = async (id: number) => {
       {
         name: "RIVERS",
         value: realm.rivers.toString() || "0" + " / 60",
+        inline: true,
+      },
+      {
+        name: "\u200b",
+        value: "\u200b",
+        inline: false,
+      },
+      {
+        name: "OPEN SEA",
+        value: `[View On Open sea](https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/${id})`,
         inline: true,
       },
     ],
