@@ -53,7 +53,7 @@ client.on("interactionCreate", async (interaction) => {
     }
 });
 
-client.on('message', msg => {
+client.on('messageCreate', msg => {
     if (!msg.content.startsWith(discordConfig.prefix) || msg.author.bot) return;
 
     const args: any = msg.content.slice(discordConfig.prefix.length).trim().split(' ');
