@@ -90,7 +90,7 @@ const fetchRealm = async (id: number) => {
       },
       {
         name: "OPEN SEA",
-        value: `[View On Open sea](https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/${id})`,
+        value: `[View On Open Sea](https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/${id})`,
         inline: true,
       },
     ],

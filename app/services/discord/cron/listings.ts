@@ -3,12 +3,12 @@ import fetch from 'node-fetch';
 import { openSeaConfig, discordConfig } from "../../../config";
 import { settings, buildMessage } from './helpers';
 
-var salesCache: any = [];
+var listingCache: any = [];
 var lastTimestamp: any = null;
 
 export = {
-    name: 'sales',
-    description: 'sales bot',
+    name: 'listing',
+    description: 'listing bot',
     interval: 30000,
     enabled: discordConfig.salesChannel != null,
     async execute(client: any) {
@@ -24,8 +24,7 @@ export = {
         let newEvents = true;
 
         do {
-
-            let url: string = `${openSeaConfig.openseaEventsUrl}?collection_slug=lootrealms&event_type=successful&only_opensea=false&occurred_before=${newTimestamp}${next == null ? '' : `&cursor=${next}`}`;
+            let url: string = `${openSeaConfig.openseaEventsUrl}?collection_slug=lootrealms&event_type=created&only_opensea=false&occurred_before=${newTimestamp}${next == null ? '' : `&cursor=${next}`}`;
             try {
                 var res = await fetch(url, settings);
                 if (res.status != 200) {
@@ -36,17 +35,15 @@ export = {
 
                 next = data.next;
 
-
-
                 data.asset_events.forEach(async function (event: any) {
 
                     if (event.asset) {
-                        if (salesCache.includes(event.id)) {
+                        if (listingCache.includes(event.id)) {
                             newEvents = false;
                             return;
                         } else {
-                            salesCache.push(event.id);
-                            if (salesCache.length > 200) salesCache.shift();
+                            listingCache.push(event.id);
+                            if (listingCache.length > 200) listingCache.shift();
                         }
 
                         if ((+new Date(event.created_date) / 1000) < lastTimestamp) {
@@ -54,7 +51,7 @@ export = {
                             return;
                         }
 
-                        const message = await buildMessage(event, true)
+                        const message = await buildMessage(event, false)
 
                         client.channels.fetch(discordConfig.listingsChannel)
                             .then((channel: any) => {

@@ -1,9 +1,9 @@
 import { Client, Intents, Collection } from "discord.js";
 import fs from "fs";
 import { discordConfig } from "../../config";
-// import cron from 'node-cron'
-// import sales from "./cron/sales";
-
+import cron from 'node-cron'
+import listings from "./cron/listings";
+import sales from "./cron/sales";
 
 const client = new Client({
     intents: [
@@ -27,9 +27,12 @@ client.once("ready", () => {
         const command = require(`./commands/${name}`);
         client.commands.set(command.data.name, command);
     }
-    // cron.schedule('* * * * * *', () => {
-    //     // sales.execute(client)
-    // });
+    cron.schedule('*/2 * * * *', () => {
+        sales.execute(client)
+    });
+    cron.schedule('*/2 * * * *', () => {
+        listings.execute(client)
+    });
 });
 
 client.on("interactionCreate", async (interaction) => {

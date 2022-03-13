@@ -10,11 +10,16 @@ export const twitterConfig = {
 export const discordConfig = {
     client_id: process.env.DISCORD_CLIENT_ID || "",
     guild_id: process.env.DISCORD_GUILD_ID || "",
-    token: process.env.DISCORD_TOKEN || ""
+    token: process.env.DISCORD_TOKEN || "",
+    salesChannel: process.env.DISCORD_SALES_CHANNEL,
+    listingsChannel: process.env.DISCORD_LISTINGS_CHANNEL,
 }
 
 export const openSeaConfig = {
     "prefix": "!",
     "openseaAssetUrl": "https://api.opensea.io/api/v1/asset",
-    "openseaEventsUrl": "https://api.opensea.io/api/v1/events"
+    "openseaEventsUrl": "https://api.opensea.io/api/v1/events",
+    "openseaApiKey": process.env.OPEN_SEA_API_KEY || "",
+    collectionName: process.env.OPEN_SEA_COLLECTION_NAME,
+    contractAddress: process.env.REALMS_CONTRACT_ADDRESS
 }
