@@ -56,7 +56,7 @@ export = {
 
                         const message = await buildMessage(event, true)
 
-                        client.channels.fetch(discordConfig.listingsChannel)
+                        client.channels.fetch(discordConfig.salesChannel)
                             .then((channel: any) => {
                                 channel.send({ embeds: [message] });
                             })
