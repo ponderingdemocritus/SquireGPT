@@ -8,6 +8,7 @@ export const twitterConfig = {
 };
 
 export const discordConfig = {
+    prefix: "!",
     client_id: process.env.DISCORD_CLIENT_ID || "",
     guild_id: process.env.DISCORD_GUILD_ID || "",
     token: process.env.DISCORD_TOKEN || "",
@@ -16,7 +17,6 @@ export const discordConfig = {
 }
 
 export const openSeaConfig = {
-    "prefix": "!",
     "openseaAssetUrl": "https://api.opensea.io/api/v1/asset",
     "openseaEventsUrl": "https://api.opensea.io/api/v1/events",
     "openseaApiKey": process.env.OPEN_SEA_API_KEY || "",
