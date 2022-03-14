@@ -17,9 +17,9 @@ export const discordConfig = {
 }
 
 export const openSeaConfig = {
-    "openseaAssetUrl": "https://api.opensea.io/api/v1/asset",
-    "openseaEventsUrl": "https://api.opensea.io/api/v1/events",
-    "openseaApiKey": process.env.OPEN_SEA_API_KEY || "",
+    openseaAssetUrl: "https://api.opensea.io/api/v1/asset",
+    openseaEventsUrl: "https://api.opensea.io/api/v1/events",
+    openseaApiKey: process.env.OPEN_SEA_API_KEY || "",
     collectionName: process.env.OPEN_SEA_COLLECTION_NAME,
     contractAddress: process.env.REALMS_CONTRACT_ADDRESS
 }

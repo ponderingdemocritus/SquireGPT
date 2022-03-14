@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { request } from "graphql-request";
-import { getGA } from '../../graphql'
+import { getGA } from '../../utils/graphql'
 import sharp from 'sharp';
 
-const fetchRealm = async (id: number) => {
+const fetchGA = async (id: number) => {
 
     const variables = {
         id: id.toString(),
@@ -26,10 +26,7 @@ const fetchRealm = async (id: number) => {
     let img = await sharp(image);
 
     return {
-        img: img,
-        attributes: {
-            title: "GA",
-        }
+        img: img
     }
 };
 
@@ -38,13 +35,12 @@ export = {
         .setName("ga")
         .setDescription("Replies with your GA details")
         .addIntegerOption((option) =>
-            option.setName("int").setDescription("Enter Realm Id")
+            option.setName("int").setDescription("Enter GA Id")
         ),
     async execute(interaction: any) {
         const integer = interaction.options.getInteger("int");
-        const res = await fetchRealm(integer);
+        const res = await fetchGA(integer);
         await interaction.reply({
-            embeds: [res.attributes],
             files: [res.img],
             fetchReply: true,
         });

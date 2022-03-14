@@ -14,7 +14,6 @@ const client = new Client({
 });
 
 
-
 client.commands = new Collection();
 
 const commandFiles = fs

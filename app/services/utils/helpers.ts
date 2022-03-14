@@ -1,6 +1,6 @@
-import { openSeaConfig } from "../../../config";
-import { getRealm } from '../../graphql'
-import { resources } from "../../../db/resources";
+import { openSeaConfig } from "../../config";
+import { getRealm } from './graphql'
+import { resources } from "../../db/resources";
 import { request } from "graphql-request";
 
 export const settings = {

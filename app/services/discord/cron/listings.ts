@@ -1,7 +1,7 @@
 require('dotenv').config();
 import fetch from 'node-fetch';
 import { openSeaConfig, discordConfig } from "../../../config";
-import { settings, buildMessage } from './helpers';
+import { settings, buildMessage } from '../../utils/helpers';
 
 var listingCache: any = [];
 var lastTimestamp: any = null;

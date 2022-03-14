@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { request } from "graphql-request";
 import { resources } from "../../../db/resources";
-import { getRealm } from '../../graphql'
+import { getRealm } from '../../utils/graphql'
+
 
 const fetchRealm = async (id: number) => {
   const variables = {

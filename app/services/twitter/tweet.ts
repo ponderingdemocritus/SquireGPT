@@ -25,8 +25,6 @@ export async function tweet(body: Cast, offset: number, random: number) {
 
     let heading = text[offset].title + ": " + (body.token_amount * (body.token_boost / 1000 + 1))
 
-
-
     let msg = description + "\n \n \n" + heading + "\n \n" + cityHealth + "\n \n" + shieldHealth
 
     twitterClient.post('media/upload', { media_data: b64content }, function (_err, data: any, _response) {

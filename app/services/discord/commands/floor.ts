@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { settings } from '../cron/helpers';
+import { settings } from '../../utils/helpers';
+
 
 const fetchFloor = async () => {
     let url = `https://api.opensea.io/api/v1/collection/lootrealms/stats`
