@@ -46,10 +46,10 @@ export = {
                             if (listingCache.length > 200) listingCache.shift();
                         }
 
-                        // if ((+new Date(event.created_date) / 1000) < lastTimestamp) {
-                        //     newEvents = false;
-                        //     return;
-                        // }
+                        if ((+new Date(event.created_date) / 1000) < lastTimestamp) {
+                            newEvents = false;
+                            return;
+                        }
 
                         const message = await buildMessage(event, false)
 
