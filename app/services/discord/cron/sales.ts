@@ -1,18 +1,17 @@
-require('dotenv').config();
-import fetch from 'node-fetch';
+require("dotenv").config();
+import fetch from "node-fetch";
 import { openSeaConfig, discordConfig } from "../../../config";
-import { settings, buildMessage } from '../../utils/helpers';
+import { settings, buildMessage } from "../../utils/helpers";
 
 var salesCache: any = [];
 var lastTimestamp: any = null;
 
 export = {
-    name: 'sales',
-    description: 'sales bot',
+    name: "sales",
+    description: "sales bot",
     interval: 30000,
     enabled: discordConfig.salesChannel != null,
     async execute(client: any) {
-
         if (lastTimestamp == null) {
             lastTimestamp = Math.floor(Date.now() / 1000) - 120;
         } else {
@@ -24,10 +23,12 @@ export = {
         let newEvents = true;
 
         do {
-
-            let url: string = `${openSeaConfig.openseaEventsUrl}?collection_slug=lootrealms&event_type=successful&only_opensea=false&occurred_before=${newTimestamp}${next == null ? '' : `&cursor=${next}`}`;
+            let url: string = `${openSeaConfig.openseaEventsUrl
+                }?collection_slug=lootrealms&event_type=successful&only_opensea=false&occurred_before=${newTimestamp}${next == null ? "" : `&cursor=${next}`
+                }`;
             try {
                 var res = await fetch(url, settings);
+                console.log(res);
                 if (res.status != 200) {
                     throw new Error(`Couldn't retrieve events: ${res.statusText}`);
                 }
@@ -36,10 +37,7 @@ export = {
 
                 next = data.next;
 
-
-
                 data.asset_events.forEach(async function (event: any) {
-
                     if (event.asset) {
                         if (salesCache.includes(event.id)) {
                             newEvents = false;
@@ -54,22 +52,40 @@ export = {
                             return;
                         }
 
-                        const message = await buildMessage(event, true)
+                        const message = await buildMessage(event, true);
 
-                        client.channels.fetch(discordConfig.salesChannel)
+                        client.channels
+                            .fetch(discordConfig.salesChannel)
                             .then((channel: any) => {
-                                channel.send({ embeds: [message] });
+                                channel
+                                    .send({ embeds: [message.attributes] })
+                                    .then((text: any) => {
+                                        console.log(text)
+                                        for (const resource of message.resources) {
+                                            console.log(resource);
+
+                                            const emoji = client.emojis.cache.find(
+                                                (emoji: any) =>
+                                                    emoji.name === resource.replace(" ", "")
+                                            );
+
+                                            console.log(emoji);
+
+                                            if (emoji) {
+                                                text.react(emoji);
+                                            }
+                                        }
+                                    });
                             })
                             .catch(console.error);
                     }
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 console.error(error);
                 return;
             }
-        } while (next != null && newEvents)
+        } while (next != null && newEvents);
 
         lastTimestamp = newTimestamp;
-    }
+    },
 };

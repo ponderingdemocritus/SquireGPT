@@ -46,16 +46,32 @@ export = {
                             if (listingCache.length > 200) listingCache.shift();
                         }
 
-                        if ((+new Date(event.created_date) / 1000) < lastTimestamp) {
-                            newEvents = false;
-                            return;
-                        }
+                        // if ((+new Date(event.created_date) / 1000) < lastTimestamp) {
+                        //     newEvents = false;
+                        //     return;
+                        // }
 
                         const message = await buildMessage(event, false)
 
                         client.channels.fetch(discordConfig.listingsChannel)
                             .then((channel: any) => {
-                                channel.send({ embeds: [message] });
+                                channel.send({ embeds: [message.attributes] }).then((text: any) => {
+
+                                    for (const resource of message.resources) {
+                                        console.log(resource);
+
+                                        const emoji = client.emojis.cache.find(
+                                            (emoji: any) =>
+                                                emoji.name === resource.replace(" ", "")
+                                        );
+
+                                        console.log(emoji);
+
+                                        if (emoji) {
+                                            text.react(emoji);
+                                        }
+                                    }
+                                });
                             })
                             .catch(console.error);
                     }

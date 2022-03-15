@@ -25,7 +25,7 @@ export const buildMessage = async (openSeaEvent: any, sale: boolean) => {
         .filter((a: any) => realm.resourceIds.includes(a.id))
         .map((a: any) => {
             return a.trait;
-        }).join(' | ');
+        })
 
     let description;
 
@@ -52,7 +52,7 @@ export const buildMessage = async (openSeaEvent: any, sale: boolean) => {
         },
         {
             name: "RESOURCES",
-            value: resourceString,
+            value: resourceString.join(' | '),
             inline: true,
         },
         {
@@ -136,15 +136,18 @@ export const buildMessage = async (openSeaEvent: any, sale: boolean) => {
     }
 
     return {
-        title: realm.name,
-        description: description,
-        image: {
-            url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${openSeaEvent.asset.token_id}.webp`,
-        },
-        thumbnail: {
-            url: `https://d23fdhqc1jb9no.cloudfront.net/_Realms/${openSeaEvent.asset.token_id}.svg`,
-        },
-        fields: fields,
-        url: "https://bibliothecadao.xyz/realms/" + openSeaEvent.asset.token_id,
+        resources: resourceString,
+        attributes: {
+            title: realm.name,
+            description: description,
+            image: {
+                url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${openSeaEvent.asset.token_id}.webp`,
+            },
+            thumbnail: {
+                url: `https://d23fdhqc1jb9no.cloudfront.net/_Realms/${openSeaEvent.asset.token_id}.svg`,
+            },
+            fields: fields,
+            url: "https://bibliothecadao.xyz/realms/" + openSeaEvent.asset.token_id,
+        }
     };
 };
