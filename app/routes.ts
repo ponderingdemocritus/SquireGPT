@@ -8,6 +8,8 @@ import { Cast, Action } from './types';
 
 const routes = Router();
 
+const channel = ["951253679464394812", "951288986389864469"] // light 0, dark 1
+
 const embed = (request: Cast, random: number, offset: number) => {
 
     if (request.city_health === 0) {
@@ -75,7 +77,7 @@ routes.post('/action', (req: Action, res: any) => {
     // tweet
     tweet(req.body, offset, num)
 
-    client.channels.fetch('951253679464394812')
+    client.channels.fetch(channel[0])
         .then((channel: any) => {
             channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
         })
