@@ -22,7 +22,7 @@ export = {
                     function: SelectorName.getMainHealth
                 }).then((health: any) => {
                     console.log(health.result[0])
-                    message.channel.send(`Ser, The City Health is ${toBN(health.result[0]) / 100}`);
+                    message.channel.send(`Ser, The Divine cities health is ${toBN(health.result[0]) / 100}`);
                 })
             })
             .catch((error: any) => message.channel.send(error.message));
