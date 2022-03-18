@@ -58,14 +58,11 @@ export = {
                                 channel.send({ embeds: [message.attributes] }).then((text: any) => {
 
                                     for (const resource of message.resources) {
-                                        console.log(resource);
 
                                         const emoji = client.emojis.cache.find(
                                             (emoji: any) =>
                                                 emoji.name === resource.replace(" ", "")
                                         );
-
-                                        console.log(emoji);
 
                                         if (emoji) {
                                             text.react(emoji);
