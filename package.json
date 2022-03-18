@@ -2,7 +2,7 @@
   "name": "STARKy",
   "version": "1.0.0",
   "description": "Bot",
-  "main": "index.js",
+  "main": "dist/server.js",
   "author": "Pondering Democritus",
   "license": "MIT",
   "dependencies": {
@@ -32,7 +32,7 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "yarn build-ts && npm run serve",
+    "start": "yarn build-ts && npm run serve && yarn watch-node",
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
     "build-ts": "tsc",

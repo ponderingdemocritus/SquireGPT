@@ -71,7 +71,7 @@ routes.post('/action', (req, res) => {
     }
     // tweet
     (0, tweet_1.tweet)(req.body, offset, num);
-    discord_1.default.channels.fetch(channel[offset])
+    discord_1.default.channels.fetch(channel[0])
         .then((channel) => {
         channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
     })
