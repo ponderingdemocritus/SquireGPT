@@ -14,3 +14,9 @@ export interface Cast {
 export interface DiscordMessage {
     channel: any
 }
+
+export interface StarkNetCall {
+    contractAddress: string
+    function: string
+    calldata?: string[]
+}
