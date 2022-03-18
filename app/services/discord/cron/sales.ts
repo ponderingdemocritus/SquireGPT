@@ -28,7 +28,7 @@ export = {
                 }`;
             try {
                 var res = await fetch(url, settings);
-                console.log(res);
+
                 if (res.status != 200) {
                     throw new Error(`Couldn't retrieve events: ${res.statusText}`);
                 }
