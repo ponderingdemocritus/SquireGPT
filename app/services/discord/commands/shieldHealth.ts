@@ -29,7 +29,7 @@ export = {
             .then((contract: any) => {
                 fetchStarkNet({
                     contractAddress: contract.result[0],
-                    calldata: ["2", tokenForGame],
+                    calldata: ["3", tokenForGame],
                     function: SelectorName.getShieldValue
                 }).then((health: any) => {
                     console.log(health.result[0])

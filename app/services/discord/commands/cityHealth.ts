@@ -18,7 +18,7 @@ export = {
             .then((contract: any) => {
                 fetchStarkNet({
                     contractAddress: contract.result[0],
-                    calldata: ["2"],
+                    calldata: ["3"],
                     function: SelectorName.getMainHealth
                 }).then((health: any) => {
                     console.log(health.result[0])
