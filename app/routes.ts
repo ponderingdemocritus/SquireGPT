@@ -25,13 +25,13 @@ const embed = (request: Cast, random: number, offset: number) => {
         }
     } else {
         return {
-            title: text[offset].title + " : " + (request.token_amount * (request.token_boost / 1000 + 1)),
+            title: text[offset].title + " : " + (request.token_amount),
             description: text[offset].description,
             color: colours[offset],
             fields: [
                 {
                     name: 'Boost',
-                    value: (request.token_boost / 1000 + 1).toString() || "0"
+                    value: request.token_boost.toString() || "0"
                 },
                 {
                     name: 'City Health',
