@@ -52,11 +52,12 @@ yarn && yarn start
 
 ### Adding a slash command:
 
-1. Create new file in services/discord/commands
-2. Copy existing contents from another command
+1. Create new file in `/app/services/discord/commands`
+2. Copy existing contents from another command (e.g. GA)
 3. Add a name to the function in the exports
 4. Include what you would like to return
-5. Run locally and test on your own server
+5. Add a graphql query to `/app/services/utils/graphql/index.ts`
+6. Run locally and test on your own server
 
 # TODO:
 
