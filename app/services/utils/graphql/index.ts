@@ -25,3 +25,11 @@ export const getGA = gql`
     }
   }
 `;
+
+export const getCNC = gql`
+  query getDungeon($id: String!) {
+    dungeons(where: { id: $id }) {
+      svg
+    }
+  }
+`;
