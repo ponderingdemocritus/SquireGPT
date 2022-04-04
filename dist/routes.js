@@ -26,13 +26,13 @@ const embed = (request, random, offset) => {
     }
     else {
         return {
-            title: desiege_1.text[offset].title + " : " + (request.token_amount * (request.token_boost / 1000 + 1)),
+            title: desiege_1.text[offset].title + " : " + (request.token_amount),
             description: desiege_1.text[offset].description,
             color: desiege_1.colours[offset],
             fields: [
                 {
                     name: 'Boost',
-                    value: (request.token_boost / 1000 + 1).toString() || "0"
+                    value: request.token_boost.toString() || "0"
                 },
                 {
                     name: 'City Health',
