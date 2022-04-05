@@ -4,6 +4,7 @@ import { discordConfig } from "../../config";
 import cron from 'node-cron'
 import listings from "./cron/listings";
 import sales from "./cron/sales";
+import { getPrice } from "./status/price"
 
 const client = new Client({
     intents: [
@@ -32,7 +33,13 @@ client.once("ready", () => {
     cron.schedule('*/2 * * * *', () => {
         listings.execute(client)
     });
+    cron.schedule('*/2 * * * *', async () => {
+        client.user?.setActivity(await getPrice(), { type: "WATCHING" })
+    });
+
 });
+
+
 
 client.on("interactionCreate", async (interaction) => {
     if (!interaction.isCommand()) return;
