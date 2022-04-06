@@ -1,13 +1,16 @@
 import axios from 'axios'
 export const getPrice = async () => {
-    let lordsPrice: number = 0;
+
+    let lordsPriceUSD: number = 0;
+    let lordsPriceETH: number = 0;
     const getLordsPrice = async () => {
         const price: any = await axios.get(
-            'https://api.coingecko.com/api/v3/simple/price?ids=lords&vs_currencies=USD'
+            'https://api.coingecko.com/api/v3/simple/price?ids=lords&vs_currencies=ETH,USD'
         )
-        lordsPrice = price.data['lords'].usd
+        lordsPriceUSD = price.data['lords'].usd
+        lordsPriceETH = price.data['lords'].eth
     }
     await getLordsPrice()
-    console.log(lordsPrice)
-    return 'LORDS: $' + lordsPrice.toFixed(2).toString()
+    console.log(lordsPriceUSD)
+    return '$LORDS: $' + lordsPriceUSD.toFixed(2).toString()
 }
