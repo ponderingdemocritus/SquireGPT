@@ -78,5 +78,15 @@ routes.post('/action', (req, res) => {
         .catch(console.error);
     res.send("YESS!!!");
 });
+routes.post('/briq', (_req, res) => {
+    // tweet
+    // tweet(req.body, offset, num)
+    // client.channels.fetch('885089924662046720')
+    //     .then((channel: any) => {
+    //         channel.send({ embeds: [embed(req.body, num, offset)], files: [file] });
+    //     })
+    //     .catch(console.error);
+    res.send("YESS!!!");
+});
 exports.default = routes;
 //# sourceMappingURL=routes.js.map

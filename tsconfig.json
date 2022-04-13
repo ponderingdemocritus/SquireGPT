@@ -28,5 +28,5 @@
       "*": ["node_modules/*", "app/types/*"]
     }
   },
-  "include": ["app/**/*", "./app/**/*.ts", "./app/**/*.tsx"]
+  "include": ["app/**/*", "./app/**/*.ts", "./app/**/*.tsx", "routes.ts"]
 }

@@ -1,12 +1,12 @@
 require('dotenv').config();
 import { Router } from 'express';
-import client from './services/discord';
+import client from '../services/discord';
 import { MessageAttachment } from 'discord.js';
-import { colours, text, images, final } from './db/desiege';
-import { tweet } from './services/twitter/tweet'
-import { Cast, Action } from './types';
+import { colours, text, images, final } from '../db/desiege';
+import { tweet } from '../services/twitter/tweet'
+import { Cast, Action } from '../types';
 
-const routes = Router();
+const DesiegeRouter = Router();
 
 const channel = ["951253679464394812", "951288986389864469"] // light 0, dark 1
 
@@ -56,8 +56,7 @@ const embed = (request: Cast, random: number, offset: number) => {
 
 };
 
-routes.post('/action', (req: Action, res: any) => {
-
+DesiegeRouter.post('/action', (req: Action, res: any) => {
 
     const offset = req.body.token_offset - 1
     let file: any
@@ -86,4 +85,4 @@ routes.post('/action', (req: Action, res: any) => {
     res.send("YESS!!!");
 });
 
-export default routes
+export default DesiegeRouter

@@ -20,3 +20,14 @@ export interface StarkNetCall {
     function: string
     calldata?: string[]
 }
+
+export interface Briq {
+    body: Wonder
+}
+
+export interface Wonder {
+    token_id: string
+    name: string
+    minter: string
+    image: string
+}
