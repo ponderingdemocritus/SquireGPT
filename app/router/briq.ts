@@ -8,11 +8,12 @@ const BriqRouter = Router();
 const wonder = (wonder: Wonder) => {
     return {
         title: wonder.name,
-        description: wonder.minter,
+        description:'Built by: ' + wonder.minter,
         image: {
             url: wonder.image,
         },
-        timestamp: new Date()
+        timestamp: new Date(),
+        url: wonder.external_url,
     }
 }
 
@@ -23,7 +24,7 @@ BriqRouter.post('/briq', (req: Briq, res: any) => {
     // tweet
     // tweet(req.body, offset, num)
 
-    client.channels.fetch('963733147474853928')
+    client.channels.fetch('885089924662046720')
         .then((channel: any) => {
             channel.send({
                 embeds: [wonder(req.body)]

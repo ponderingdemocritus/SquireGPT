@@ -30,4 +30,5 @@ export interface Wonder {
     name: string
     minter: string
     image: string
+    external_url: string
 }
