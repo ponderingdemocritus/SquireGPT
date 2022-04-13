@@ -24,7 +24,7 @@ BriqRouter.post('/briq', (req: Briq, res: any) => {
     // tweet
     // tweet(req.body, offset, num)
 
-    client.channels.fetch('885089924662046720')
+    client.channels.fetch('963733147474853928')
         .then((channel: any) => {
             channel.send({
                 embeds: [wonder(req.body)]
