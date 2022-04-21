@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import BriqRouter from './briq';
-import DesiegeRouter from './briq';
+import DesiegeRouter from './desiege';
 
 const apiRouter = Router();
 
