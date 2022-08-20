@@ -27,5 +27,5 @@ export const openSeaConfig = {
 
 export const biblioConfig = {
   indexerUrl: "https://dev-indexer-gu226.ondigitalocean.app/graphql",
-  atlasBaseUrl: "https://settling.bibliothecadao.xyz"
+  atlasBaseUrl: process.env.ATLAS_URL
 };
