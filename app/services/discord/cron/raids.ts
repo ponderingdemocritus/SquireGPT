@@ -14,6 +14,16 @@ const buildRaidMessage = (raid: any) => {
   let pillagedItems: string[] = [];
   let fields = [];
 
+  fields.push({
+    name: `ATTACKER`,
+    value: `${raid.data.attackRealmId}`,
+    inline: false,
+  }, {
+    name: `DEFENDER`,
+    value: `${raid.realmName} - ${raid.realmId}`,
+    inline: false,
+  })
+
   if (!raid.data.success) {
     title = 'Raid Success!'
     description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was pillaged by ${raid.data.attackRealmOwner}`;
@@ -28,9 +38,6 @@ const buildRaidMessage = (raid: any) => {
     title = 'Raid Failure!'
     description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was attacked by ${raid.data.attackRealmOwner} but failed...`;
   }
-
-
-
 
 
   pillagedItems = raid.data.pillagedResources.map((resource: any) => {
