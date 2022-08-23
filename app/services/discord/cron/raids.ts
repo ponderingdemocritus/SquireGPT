@@ -72,7 +72,7 @@ const buildRaidMessage = (raid: any) => {
       title: title,
       description: description,
       image: {
-        url: `${biblioConfig.atlasBaseUrl}/siege-tablet.png`,
+        url: `https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${307244_0017_0005}.png`,
       },
       thumbnail: {
         url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`,
