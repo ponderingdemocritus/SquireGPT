@@ -5,6 +5,7 @@ import { formatFixed } from "@ethersproject/bignumber";
 // import { history } from "../../../services/utils/testing/responses";
 import { MessageActionRow, MessageButton } from "discord.js";
 import { MessageButtonStyles } from "discord.js/typings/enums";
+import { resources } from "../../../db/resources";
 const formatEther = (value: string) => formatFixed(value, 18);
 
 const buildRaidMessage = (raid: any) => {
@@ -39,8 +40,22 @@ const buildRaidMessage = (raid: any) => {
     description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was attacked by ${raid.data.attackRealmOwner} but failed...`;
   }
 
+  // Sort incoming resources
+  const resourceNames = resources.map((resource: any) => {
+    return resource.trait; //get the names from the resources list (these are ordered)
+  })
+  const comparePillagedResources = (a: any, b: any) => {
+    if (resourceNames.indexOf(a.resourceName) < resourceNames.indexOf(b.resourceName)) {
+      return -1;
+    }
+    else if (resourceNames.indexOf(a.resourceName) > resourceNames.indexOf(b.resourceName)) {
+      return 1;
+    }
+    return 0;
+  }
+  const orderedPillagedResources = raid.data.pillagedResources.sort(comparePillagedResources)
 
-  pillagedItems = raid.data.pillagedResources.map((resource: any) => {
+  pillagedItems = orderedPillagedResources.map((resource: any) => {
     return `${formatEther(resource.amount)} ${resource.resourceName}`;
   });
 
@@ -51,7 +66,7 @@ const buildRaidMessage = (raid: any) => {
   }
   // description = `${pillagedItems[0]} was pillaged`;
   else {
-    raid.data.pillagedResources.forEach((resource: any) => {
+    orderedPillagedResources.forEach((resource: any) => {
       fields.push({
         name: `${formatEther(resource.amount)} ${resource.resourceName} pillaged!`,
         value: "\u200b",
@@ -60,7 +75,7 @@ const buildRaidMessage = (raid: any) => {
     })
   }
 
-  const resourceString = raid.data.pillagedResources
+  const resourceString = orderedPillagedResources
     .map((a: any) => {
       return a.resourceName;
     })
