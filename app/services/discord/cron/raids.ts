@@ -9,51 +9,60 @@ import { resources } from "../../../db/resources";
 const formatEther = (value: string) => formatFixed(value, 18);
 
 const buildRaidMessage = (raid: any) => {
-
   let title;
   let description = "";
   let pillagedItems: string[] = [];
   let fields = [];
 
-  fields.push({
-    name: `ATTACKER`,
-    value: `${raid.data.attackRealmId}`,
-    inline: false,
-  }, {
-    name: `DEFENDER`,
-    value: `${raid.realmName} - ${raid.realmId}`,
-    inline: false,
-  })
+  fields.push(
+    {
+      name: `ATTACKER`,
+      value: `${raid.data.attackRealmId}`,
+      inline: false
+    },
+    {
+      name: `DEFENDER`,
+      value: `${raid.realmName} - ${raid.realmId}`,
+      inline: false
+    }
+  );
 
   if (!raid.data.success) {
-    title = 'Raid Success!'
-    description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was pillaged by ${raid.data.attackRealmOwner}`;
+    title = "Raid Success!";
+    description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was pillaged by ${raid.data.attackRealmName}`;
     if (raid.data.relicLost) {
       fields.push({
         name: `Relic ${raid.data.relicLost} stolen!`,
         value: "\u200b",
-        inline: false,
-      })
+        inline: false
+      });
     }
   } else {
-    title = 'Raid Failure!'
-    description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was attacked by ${raid.data.attackRealmOwner} but failed...`;
+    title = "Raid Failure!";
+    description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was attacked by ${raid.data.attackRealmName} but failed...`;
   }
 
   // Sort incoming resources
   const resourceNames = resources.map((resource: any) => {
     return resource.trait; //get the names from the resources list (these are ordered)
-  })
+  });
   const comparePillagedResources = (a: any, b: any) => {
-    if (resourceNames.indexOf(a.resourceName) < resourceNames.indexOf(b.resourceName)) {
+    if (
+      resourceNames.indexOf(a.resourceName) <
+      resourceNames.indexOf(b.resourceName)
+    ) {
       return -1;
-    }
-    else if (resourceNames.indexOf(a.resourceName) > resourceNames.indexOf(b.resourceName)) {
+    } else if (
+      resourceNames.indexOf(a.resourceName) >
+      resourceNames.indexOf(b.resourceName)
+    ) {
       return 1;
     }
     return 0;
-  }
-  const orderedPillagedResources = raid.data.pillagedResources.sort(comparePillagedResources)
+  };
+  const orderedPillagedResources = raid.data.pillagedResources.sort(
+    comparePillagedResources
+  );
 
   pillagedItems = orderedPillagedResources.map((resource: any) => {
     return `${formatEther(resource.amount)} ${resource.resourceName}`;
@@ -68,18 +77,18 @@ const buildRaidMessage = (raid: any) => {
   else {
     orderedPillagedResources.forEach((resource: any) => {
       fields.push({
-        name: `${formatEther(resource.amount)} ${resource.resourceName} pillaged!`,
+        name: `${formatEther(resource.amount)} ${
+          resource.resourceName
+        } pillaged!`,
         value: "\u200b",
-        inline: false,
-      })
-    })
+        inline: false
+      });
+    });
   }
 
-  const resourceString = orderedPillagedResources
-    .map((a: any) => {
-      return a.resourceName;
-    })
-
+  const resourceString = orderedPillagedResources.map((a: any) => {
+    return a.resourceName;
+  });
 
   return {
     resources: resourceString,
@@ -87,13 +96,13 @@ const buildRaidMessage = (raid: any) => {
       title: title,
       description: description,
       image: {
-        url: `https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${raid.eventId}.png`,
+        url: `https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${raid.eventId}.png`
       },
       thumbnail: {
-        url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`,
+        url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`
       },
       fields: fields,
-      url: `${biblioConfig.atlasBaseUrl}/realm/${raid.realmId}?tab=History`,
+      url: `${biblioConfig.atlasBaseUrl}/realm/${raid.realmId}?tab=History`
     }
   };
 };
@@ -183,33 +192,30 @@ export = {
       const raids = await fetchRealmHistory(lastTimestamp);
 
       if (raids && raids.length) {
-
         raids.forEach((element: any) => {
+          const message = buildRaidMessage(element);
 
-          const message = buildRaidMessage(element)
+          const row = new MessageActionRow().addComponents(
+            new MessageButton()
 
-          const row = new MessageActionRow()
-            .addComponents(
-              new MessageButton()
-
-                .setLabel('See Realm')
-                .setURL(message.attributes.url)
-                .setStyle(MessageButtonStyles.LINK),
-            );
+              .setLabel("See Realm")
+              .setURL(message.attributes.url)
+              .setStyle(MessageButtonStyles.LINK)
+          );
 
           client.channels
             .fetch(discordConfig.raidsChannel)
             .then((channel: any) => {
               channel.send({
-                embeds: [message.attributes], components: [row]
+                embeds: [message.attributes],
+                components: [row]
               });
               lastTimestamp = raids[0].timestamp;
-            }).then((text: any) => {
-
+            })
+            .then((text: any) => {
               for (const resource of message.resources) {
                 const emoji = client.emojis.cache.find(
-                  (emoji: any) =>
-                    emoji.name === resource.replace(" ", "")
+                  (emoji: any) => emoji.name === resource.replace(" ", "")
                 );
                 if (emoji) {
                   text.react(emoji);
@@ -223,7 +229,6 @@ export = {
               );
             });
         });
-
       }
     } catch (e) {
       console.error(
