@@ -4,10 +4,7 @@ import { resources } from "../../db/resources";
 import { request } from "graphql-request";
 
 export const settings = {
-    method: "GET",
-    headers: {
-        "X-API-KEY": openSeaConfig.openseaApiKey,
-    },
+    method: "GET"
 };
 
 export const buildMessage = async (openSeaEvent: any, sale: boolean) => {
