@@ -6,9 +6,60 @@ import { formatFixed } from "@ethersproject/bignumber";
 import { MessageActionRow, MessageButton } from "discord.js";
 import { MessageButtonStyles } from "discord.js/typings/enums";
 import { resources } from "../../../db/resources";
+import WebSocket from 'ws';
+
 const formatEther = (value: string) => formatFixed(value, 18);
 
-const buildRaidMessage = (raid: any) => {
+/*
+  1. query indexer for new events
+  2. hit the midware event with a POST
+  3. POST returns jobId which is used to open a websocket
+  4. listen to websocket until a json with a uri is received
+  5. build raidmessage
+  6. submit raidmessage
+
+*/
+
+// const MIDWARE_ADDRESS = "127.0.0.1:8000" // no http!
+const MIDWARE_ADDRESS = "fastapi-production-e3aa.up.railway.app"
+
+const fetchRealmHistory = async (timestamp: number) => {
+  try {
+    const response = await fetch(biblioConfig.indexerUrl, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        operationName: "getRealmHistory",
+        query: `
+            query getRealmHistory {
+                history: getRealmHistory( 
+                    filter: { 
+                        eventType: { equals:"realm_combat_attack" }, 
+                        timestamp: { gt: ${timestamp} }
+                    }) 
+                {
+                    eventId
+                    realmId
+                    realmOwner
+                    realmOrder
+                    realmName
+                    eventType
+                    data
+                    timestamp
+                }
+            }
+        `,
+      }),
+    });
+    const results = await response.json();
+    return results.data.history;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+const buildRaidMessage = (raid: any, imageUri: String) => {
   let title;
   let description = "";
   let pillagedItems: string[] = [];
@@ -17,29 +68,29 @@ const buildRaidMessage = (raid: any) => {
   fields.push(
     {
       name: `ATTACKER`,
-      value: `${raid.data.attackRealmId}`,
-      inline: false
+      value: `${raid.realmName} - ${raid.realmId}`,
+      inline: false,
     },
     {
       name: `DEFENDER`,
-      value: `${raid.realmName} - ${raid.realmId}`,
-      inline: false
+      value: `${raid.data.defendRealmName} - ${raid.data.defendRealmId}`,
+      inline: false,
     }
   );
 
   if (!raid.data.success) {
     title = "Raid Success!";
-    description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was pillaged by ${raid.data.attackRealmName}`;
+    description = `${raid.data.defendRealmName} [${raid.data.defendRealmId}] was pillaged by ${raid.realmName}`;
     if (raid.data.relicLost) {
       fields.push({
         name: `Relic ${raid.data.relicLost} stolen!`,
         value: "\u200b",
-        inline: false
+        inline: false,
       });
     }
   } else {
     title = "Raid Failure!";
-    description = `${raid.realmName} [${raid.realmId}] of the order ${raid.realmOrder} was attacked by ${raid.data.attackRealmName} but failed...`;
+    description = `${raid.data.defendRealmName} [${raid.data.defendRealmId}] was attacked by ${raid.realmName} but failed...`;
   }
 
   // Sort incoming resources
@@ -79,9 +130,9 @@ const buildRaidMessage = (raid: any) => {
       fields.push({
         name: `${formatEther(resource.amount)} ${
           resource.resourceName
-        } pillaged!`,
+        } pillaged!\n`,
         value: "\u200b",
-        inline: false
+        inline: true,
       });
     });
   }
@@ -96,15 +147,94 @@ const buildRaidMessage = (raid: any) => {
       title: title,
       description: description,
       image: {
-        url: `https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${raid.eventId}.png`
+        // url: `https://ingave-images.s3.eu-west-3.amazonaws.com/37a7186b-${raid.eventId}.png`,
+        url: imageUri,
       },
       thumbnail: {
-        url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`
+        url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`,
       },
       fields: fields,
-      url: `${biblioConfig.atlasBaseUrl}/realm/${raid.realmId}?tab=History`
-    }
+      url: `${biblioConfig.atlasBaseUrl}/realm/${raid.realmId}?tab=History`,
+    },
   };
+};
+
+const postMessage = async (client: any, element: any, imageUri: String) => {
+  const message = buildRaidMessage(element, imageUri);
+
+  const row = new MessageActionRow().addComponents(
+    new MessageButton()
+
+      .setLabel("See Realm")
+      .setURL(message.attributes.url)
+      .setStyle(MessageButtonStyles.LINK)
+  );
+
+  client.channels
+    .fetch(discordConfig.raidsChannel)
+    .then((channel: any) => {
+      channel.send({
+        embeds: [message.attributes],
+        components: [row],
+      });
+      // lastTimestamp = raids[0].timestamp;
+    })
+    .then((text: any) => {
+      for (const resource of message.resources) {
+        const emoji = client.emojis.cache.find(
+          (emoji: any) => emoji.name === resource.replace(" ", "")
+        );
+        if (emoji) {
+          text.react(emoji);
+        }
+      }
+    })
+    .catch((e: any) => {
+      console.error(
+        `Error sending raid message at timestamp ${lastTimestamp}`,
+        e
+      );
+    });
+}
+
+const generateAndPostImage = async (client: any, raid: any) => {
+  try {
+    const response = await fetch(`http://${MIDWARE_ADDRESS}/api/v1/event`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(raid),
+    });
+    const results = await response.json();
+
+    const generated_image = results[0] // we expect only 1 image
+
+    const socketUrl = `ws://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
+    const ws = new WebSocket(socketUrl)
+
+    ws.on('open', function open() {
+      console.log("ws opened")
+    });
+    
+    ws.on('message', function message(data) {
+      console.log('received: %s', data);
+      if (String(data) === "initiated") {
+        console.log(`jobId ${generated_image.id} initiated`)
+      }
+      else if (String(data) === "generating") {
+        console.log(`jobId ${generated_image.id} generating`)
+      }
+      else if (String(data) === "done") {
+        console.log(`jobId ${generated_image.id} done`)
+        ws.close()
+      }
+      else {
+        const body = JSON.parse(String(data))
+        postMessage(client, raid, body.uri)
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // const buildRaidMessage = (raid: any) => {
@@ -144,90 +274,25 @@ const buildRaidMessage = (raid: any) => {
 //     .setTimestamp(raid.timestamp);
 // };
 
-const fetchRealmHistory = async (timestamp: number) => {
-  try {
-    const response = await fetch(biblioConfig.indexerUrl, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        operationName: "getRealmHistory",
-        query: `
-            query getRealmHistory {
-                history: getRealmHistory( 
-                    filter: { 
-                        eventType: { equals:"realm_combat_defend" }, 
-                        timestamp: { gt: ${timestamp} }
-                    }) 
-                {
-                    eventId
-                    realmId
-                    realmOwner
-                    realmOrder
-                    realmName
-                    eventType
-                    data
-                    timestamp
-                }
-            }
-        `
-      })
-    });
-    const results = await response.json();
-    return results.data.history;
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
-};
 
-let lastTimestamp = new Date().getTime();
+
+// let lastTimestamp = new Date().getTime();
+let lastTimestamp = new Date(2022,11,20).getTime();
+lastTimestamp = 1669742682000;
 
 export = {
   name: "raid",
   description: "raid bot",
-  interval: 10000,
+  interval: 1000,
   enabled: discordConfig.raidsChannel != null,
   async execute(client: any) {
     try {
+      console.log("checking for raids");
       const raids = await fetchRealmHistory(lastTimestamp);
 
       if (raids && raids.length) {
-        raids.forEach((element: any) => {
-          const message = buildRaidMessage(element);
-
-          const row = new MessageActionRow().addComponents(
-            new MessageButton()
-
-              .setLabel("See Realm")
-              .setURL(message.attributes.url)
-              .setStyle(MessageButtonStyles.LINK)
-          );
-
-          client.channels
-            .fetch(discordConfig.raidsChannel)
-            .then((channel: any) => {
-              channel.send({
-                embeds: [message.attributes],
-                components: [row]
-              });
-              lastTimestamp = raids[0].timestamp;
-            })
-            .then((text: any) => {
-              for (const resource of message.resources) {
-                const emoji = client.emojis.cache.find(
-                  (emoji: any) => emoji.name === resource.replace(" ", "")
-                );
-                if (emoji) {
-                  text.react(emoji);
-                }
-              }
-            })
-            .catch((e: any) => {
-              console.error(
-                `Error sending raid message at timestamp ${lastTimestamp}`,
-                e
-              );
-            });
+        raids.forEach(async (raid: any) => {
+          await generateAndPostImage(client, raid);
         });
       }
     } catch (e) {
@@ -236,5 +301,5 @@ export = {
         e
       );
     }
-  }
+  },
 };
