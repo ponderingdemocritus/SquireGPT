@@ -27,12 +27,12 @@ client.once("ready", async () => {
     const command = require(`./commands/${name}`);
     client.commands.set(command.data.name, command);
   }
-  cron.schedule("*/2 * * * *", () => {
-    sales.execute(client);
-  });
-  cron.schedule("*/2 * * * *", () => {
-    listings.execute(client);
-  });
+  // cron.schedule("*/2 * * * *", () => {
+  //   sales.execute(client);
+  // });
+  // cron.schedule("*/2 * * * *", () => {
+  //   listings.execute(client);
+  // });
   cron.schedule("*/2 * * * *", () => {
     raids.execute(client);
   });
