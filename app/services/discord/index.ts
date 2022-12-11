@@ -2,8 +2,8 @@ import { Client, Intents, Collection } from "discord.js";
 import fs from "fs";
 import { discordConfig } from "../../config";
 import cron from "node-cron";
-import listings from "./cron/listings";
-import sales from "./cron/sales";
+// import listings from "./cron/listings";
+// import sales from "./cron/sales";
 import raids from "./cron/raids";
 import { getPrice } from "./status/price";
 
