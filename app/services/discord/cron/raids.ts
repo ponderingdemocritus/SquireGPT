@@ -177,7 +177,6 @@ const postMessage = async (client: any, element: any, imageUri: String) => {
         embeds: [message.attributes],
         components: [row],
       });
-      // lastTimestamp = raids[0].timestamp;
     })
     .then((text: any) => {
       for (const resource of message.resources) {
@@ -207,6 +206,11 @@ const generateAndPostImage = async (client: any, raid: any) => {
     const results = await response.json();
 
     const generated_image = results[0] // we expect only 1 image
+
+    if (generated_image.uri != "") {
+      postMessage(client, raid, generated_image.uri)
+      return
+    }
 
     const socketUrl = `ws://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
     const ws = new WebSocket(socketUrl)
@@ -277,8 +281,8 @@ const generateAndPostImage = async (client: any, raid: any) => {
 
 
 // let lastTimestamp = new Date().getTime();
-let lastTimestamp = new Date(2022,11,20).getTime();
-lastTimestamp = 1669742682000;
+let lastTimestamp = new Date(2022,11,1).getTime();
+lastTimestamp = 1670959403000;
 
 export = {
   name: "raid",
@@ -293,6 +297,8 @@ export = {
       if (raids && raids.length) {
         raids.forEach(async (raid: any) => {
           await generateAndPostImage(client, raid);
+          // set lastTimestamp to the timestamp of the last raid if it's larger
+          lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
         });
       }
     } catch (e) {
