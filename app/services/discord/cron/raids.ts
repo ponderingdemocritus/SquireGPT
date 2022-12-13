@@ -208,7 +208,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
 
     const generated_image = results[0] // we expect only 1 image
 
-    if (generated_image.uri != "") {
+    if (generated_image?.uri != "") {
       postMessage(client, raid, generated_image.uri)
       return
     }
