@@ -198,12 +198,16 @@ const postMessage = async (client: any, element: any, imageUri: String) => {
 
 const generateAndPostImage = async (client: any, raid: any) => {
   try {
-    const response = await fetch(`http://${MIDWARE_ADDRESS}/api/v1/event`, {
+    console.log("posting to cier")
+
+    const response = await fetch(`https://${MIDWARE_ADDRESS}/api/v1/event`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(raid),
     });
     const results = await response.json();
+
+    console.log(results)
 
     const generated_image = results[0] // we expect only 1 image
 
@@ -212,7 +216,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
       return
     }
 
-    const socketUrl = `ws://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
+    const socketUrl = `wss://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
     const ws = new WebSocket(socketUrl)
 
     ws.on('open', function open() {
@@ -295,11 +299,13 @@ export = {
       const raids = await fetchRealmHistory(lastTimestamp);
 
       if (raids && raids.length) {
-        raids.forEach(async (raid: any) => {
-          await generateAndPostImage(client, raid);
-          // set lastTimestamp to the timestamp of the last raid if it's larger
-          lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
-        });
+        await generateAndPostImage(client, raids[0]);
+        lastTimestamp = Math.max(lastTimestamp, raids[0].timestamp);
+        // raids.forEach(async (raid: any) => {
+        //   await generateAndPostImage(client, raid);
+        //   // set lastTimestamp to the timestamp of the last raid if it's larger
+        //   lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
+        // });
       }
     } catch (e) {
       console.error(
