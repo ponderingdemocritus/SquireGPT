@@ -197,7 +197,7 @@ const postMessage = async (client: any, element: any, imageUri: String) => {
 
 const generateAndPostImage = async (client: any, raid: any) => {
   try {
-    const response = await fetch(`http://${MIDWARE_ADDRESS}/api/v1/event`, {
+    const response = await fetch(`https://${MIDWARE_ADDRESS}/api/v1/event`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(raid),
