@@ -213,7 +213,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
       return
     }
 
-    const socketUrl = `ws://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
+    const socketUrl = `wss://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
     const ws = new WebSocket(socketUrl)
 
     ws.on('open', function open() {
