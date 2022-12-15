@@ -297,7 +297,7 @@ export = {
 
       if (raids && raids.length) {
         raids.forEach(async (raid: any) => {
-          await generateAndPostImage(client, raid);
+          // await generateAndPostImage(client, raid);
           // set lastTimestamp to the timestamp of the last raid if it's larger
           lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
         });
