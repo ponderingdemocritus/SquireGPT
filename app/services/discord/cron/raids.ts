@@ -153,7 +153,7 @@ const buildRaidMessage = (raid: any, imageUri: String) => {
         url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`,
       },
       fields: fields,
-      url: `${biblioConfig.atlasBaseUrl}/realm/${raid.realmId}?tab=History`,
+      // url: ``,
     },
   };
 };
@@ -165,7 +165,7 @@ const postMessage = async (client: any, element: any, imageUri: String) => {
     new MessageButton()
 
       .setLabel("See Realm")
-      .setURL(message.attributes.url)
+      // .setURL(message.attributes.url)
       .setStyle(MessageButtonStyles.LINK)
   );
 
