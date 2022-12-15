@@ -128,9 +128,8 @@ const buildRaidMessage = (raid: any, imageUri: String) => {
   else {
     orderedPillagedResources.forEach((resource: any) => {
       fields.push({
-        name: `${formatEther(resource.amount)} ${
-          resource.resourceName
-        } pillaged!\n`,
+        name: `${formatEther(resource.amount)} ${resource.resourceName
+          } pillaged!\n`,
         value: "\u200b",
         inline: true,
       });
@@ -154,7 +153,7 @@ const buildRaidMessage = (raid: any, imageUri: String) => {
         url: `https://d23fdhqc1jb9no.cloudfront.net/renders_webp/${raid.realmId}.webp`,
       },
       fields: fields,
-      url: `${biblioConfig.atlasBaseUrl}/realm/${raid.realmId}?tab=History`,
+      // url: ``,
     },
   };
 };
@@ -166,7 +165,7 @@ const postMessage = async (client: any, element: any, imageUri: String) => {
     new MessageButton()
 
       .setLabel("See Realm")
-      .setURL(message.attributes.url)
+      // .setURL(message.attributes.url)
       .setStyle(MessageButtonStyles.LINK)
   );
 
@@ -198,8 +197,11 @@ const postMessage = async (client: any, element: any, imageUri: String) => {
 
 const generateAndPostImage = async (client: any, raid: any) => {
   try {
+<<<<<<< HEAD
     console.log("posting to cier")
 
+=======
+>>>>>>> e05ff03f77e175e13768fd23a91659fca4fef0f8
     const response = await fetch(`https://${MIDWARE_ADDRESS}/api/v1/event`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -211,7 +213,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
 
     const generated_image = results[0] // we expect only 1 image
 
-    if (generated_image.uri != "") {
+    if (generated_image?.uri != "") {
       postMessage(client, raid, generated_image.uri)
       return
     }
@@ -222,7 +224,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
     ws.on('open', function open() {
       console.log("ws opened")
     });
-    
+
     ws.on('message', function message(data) {
       console.log('received: %s', data);
       if (String(data) === "initiated") {
@@ -285,7 +287,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
 
 
 // let lastTimestamp = new Date().getTime();
-let lastTimestamp = new Date(2022,11,1).getTime();
+let lastTimestamp = new Date(2022, 11, 1).getTime();
 lastTimestamp = 1670959403000;
 
 export = {
@@ -299,6 +301,7 @@ export = {
       const raids = await fetchRealmHistory(lastTimestamp);
 
       if (raids && raids.length) {
+<<<<<<< HEAD
         await generateAndPostImage(client, raids[0]);
         lastTimestamp = Math.max(lastTimestamp, raids[0].timestamp);
         // raids.forEach(async (raid: any) => {
@@ -306,6 +309,13 @@ export = {
         //   // set lastTimestamp to the timestamp of the last raid if it's larger
         //   lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
         // });
+=======
+        raids.forEach(async (raid: any) => {
+          // await generateAndPostImage(client, raid);
+          // set lastTimestamp to the timestamp of the last raid if it's larger
+          lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
+        });
+>>>>>>> e05ff03f77e175e13768fd23a91659fca4fef0f8
       }
     } catch (e) {
       console.error(
