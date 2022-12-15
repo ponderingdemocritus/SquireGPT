@@ -78,7 +78,7 @@ const buildRaidMessage = (raid: any, imageUri: String) => {
     }
   );
 
-  if (!raid.data.success) {
+  if (raid.data.success) {
     title = "Raid Success!";
     description = `${raid.data.defendRealmName} [${raid.data.defendRealmId}] was pillaged by ${raid.realmName}`;
     if (raid.data.relicLost) {
