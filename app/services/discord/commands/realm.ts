@@ -111,7 +111,9 @@ export = {
     ),
   async execute(interaction: any) {
     const integer = interaction.options.getInteger("int");
+
     const res = await fetchRealm(integer);
+
     const message = await interaction.reply({
       embeds: [res.attributes],
       fetchReply: true,
