@@ -56,10 +56,12 @@ export = {
             description: res.item_id
         };
 
-        await interaction.reply({
-            embeds: [embed],
-            fetchReply: true,
-        });
+        // await interaction.reply({
+        //     embeds: [embed],
+        //     fetchReply: true,
+        // });
+
+        interaction.channel.send({ embeds: [embed] });
 
         // fetchQuestion(question)
         // .then((question: any) => {
