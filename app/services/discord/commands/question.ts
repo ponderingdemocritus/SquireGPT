@@ -45,29 +45,16 @@ export = {
     async execute(interaction: any) {
         const question = interaction.options.getString("q");
 
-        console.log(question)
-
-        const res = await fetchQuestion(question)
-
-        console.log(res)
-
-        const embed = {
-            title: question,
-            description: res.item_id
-        };
-
-        // await interaction.reply({
-        //     embeds: [embed],
-        //     fetchReply: true,
-        // });
-
-        interaction.channel.send({ embeds: [embed] });
-
-        // fetchQuestion(question)
-        // .then((question: any) => {
-        //     message.channel.send(question.item_id);
-        // })
-        // .catch((error: any) => message.channel.send(error.message));
-
+        fetchQuestion(question)
+            .then((res: any) => {
+                const embed = {
+                    title: question,
+                    description: res.item_id,
+                    fields: [{ name: "please note:", value: 'This is a bot generated response...', inline: true }],
+                    url: "https://scroll.bibliothecadao.xyz"
+                };
+                interaction.channel.send({ embeds: [embed] });
+            })
+            .catch((error: any) => interaction.channel.send(error.message));
     },
 };
