@@ -45,7 +45,7 @@ export = {
     async execute(interaction: any) {
         const question = interaction.options.getString("q");
 
-        fetchQuestion(question)
+        await fetchQuestion(question)
             .then((res: any) => {
                 const embed = {
                     title: question,
