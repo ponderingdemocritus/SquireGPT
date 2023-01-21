@@ -39,11 +39,11 @@ export = {
         .setName("question")
         .setDescription("Asks a Question")
         .addStringOption((option) =>
-            option.setName("question")
+            option.setName("q")
                 .setDescription("What is your question?")
         ),
     async execute(interaction: any) {
-        const question = interaction.options.getString("question");
+        const question = interaction.options.getString("q");
 
         console.log(question)
 
