@@ -200,53 +200,56 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
 
 const generateAndPostImage = async (client: any, raid: any) => {
   try {
-    console.log("posting to cier")
 
-    const response = await fetch(`https://${MIDWARE_ADDRESS}/api/v1/event`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...raid,
-        specialFlag: "yeet",
-      }),
-    });
-    const results = await response.json();
+    postMessage(client, raid, "https://i.ibb.co/StQ3NPJ/combat-4.png")
 
-    console.log(results)
+    // console.log("posting to cier")
 
-    const generated_image = results[0] // we expect only 1 image
+    // const response = await fetch(`https://${MIDWARE_ADDRESS}/api/v1/event`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     ...raid,
+    //     specialFlag: "yeet",
+    //   }),
+    // });
+    // const results = await response.json();
 
-    console.log("URI:")
-    console.log(generated_image.uri)
-    if (generated_image.uri != "") {
-      postMessage(client, raid, generated_image.uri)
-      return
-    }
+    // console.log(results)
 
-    const socketUrl = `wss://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
-    const ws = new WebSocket(socketUrl)
+    // const generated_image = results[0] // we expect only 1 image
 
-    ws.on('open', function open() {
-      console.log("ws opened")
-    });
+    // console.log("URI:")
+    // console.log(generated_image.uri)
+    // if (generated_image.uri != "") {
+    //   postMessage(client, raid, generated_image.uri)
+    //   return
+    // }
 
-    ws.on('message', function message(data) {
-      console.log('received: %s', data);
-      if (String(data) === "initiated") {
-        console.log(`jobId ${generated_image.id} initiated`)
-      }
-      else if (String(data) === "generating") {
-        console.log(`jobId ${generated_image.id} generating`)
-      }
-      else if (String(data) === "done") {
-        console.log(`jobId ${generated_image.id} done`)
-        ws.close()
-      }
-      else {
-        const body = JSON.parse(String(data))
-        postMessage(client, raid, body.uri)
-      }
-    });
+    // const socketUrl = `wss://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
+    // const ws = new WebSocket(socketUrl)
+
+    // ws.on('open', function open() {
+    //   console.log("ws opened")
+    // });
+
+    // ws.on('message', function message(data) {
+    //   console.log('received: %s', data);
+    //   if (String(data) === "initiated") {
+    //     console.log(`jobId ${generated_image.id} initiated`)
+    //   }
+    //   else if (String(data) === "generating") {
+    //     console.log(`jobId ${generated_image.id} generating`)
+    //   }
+    //   else if (String(data) === "done") {
+    //     console.log(`jobId ${generated_image.id} done`)
+    //     ws.close()
+    //   }
+    //   else {
+    //     const body = JSON.parse(String(data))
+    //     postMessage(client, raid, body.uri)
+    //   }
+    // });
   } catch (e) {
     console.error(e);
   }
