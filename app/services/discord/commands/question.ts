@@ -5,7 +5,11 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 
 
 const fetchQuestion = async (question: string) => {
-    const settings = {
+
+
+    let url = `https://bot-production-da53.up.railway.app/docs/question`
+
+    let res = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -13,12 +17,7 @@ const fetchQuestion = async (question: string) => {
         body: JSON.stringify({
             question: question.toString()
         }),
-    };
-
-    console.log(settings)
-
-    let url = `https://bot-production-da53.up.railway.app/docs/question`
-    let res = await fetch(url, settings);
+    });
 
     if (res.status == 404 || res.status == 400) {
         throw new Error("Error retrieving collection stats.");
