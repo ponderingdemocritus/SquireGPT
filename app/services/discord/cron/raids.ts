@@ -6,7 +6,7 @@ import { formatFixed } from "@ethersproject/bignumber";
 import { MessageActionRow, MessageButton } from "discord.js";
 import { MessageButtonStyles } from "discord.js/typings/enums";
 import { resources } from "../../../db/resources";
-import WebSocket from 'ws';
+// import WebSocket from 'ws';
 
 const formatEther = (value: string) => formatFixed(value, 18);
 
@@ -21,7 +21,7 @@ const formatEther = (value: string) => formatFixed(value, 18);
 */
 
 // const MIDWARE_ADDRESS = "127.0.0.1:8000" // no http!
-const MIDWARE_ADDRESS = "fastapi-production-e3aa.up.railway.app"
+// const MIDWARE_ADDRESS = "fastapi-production-e3aa.up.railway.app"
 
 const fetchRealmHistory = async (timestamp: number) => {
   try {
