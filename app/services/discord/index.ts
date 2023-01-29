@@ -33,7 +33,7 @@ client.once("ready", async () => {
   // cron.schedule("*/2 * * * *", () => {
   //   listings.execute(client);
   // });
-  cron.schedule("*/2 * * * *", () => {
+  cron.schedule("20 * * * * *", () => {
     raids.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {
