@@ -2,7 +2,6 @@ require("dotenv").config();
 import fetch from "node-fetch";
 import { biblioConfig, discordConfig } from "../../../config";
 import { formatFixed } from "@ethersproject/bignumber";
-// import { history } from "../../../services/utils/testing/responses";
 import { MessageActionRow, MessageButton } from "discord.js";
 import { MessageButtonStyles } from "discord.js/typings/enums";
 import { resources } from "../../../db/resources";
@@ -261,60 +260,8 @@ async function createImage(success: boolean) {
 }
 
 const generateAndPostImage = async (client: any, raid: any) => {
-
   try {
-
     createImage(raid.data.success).then((imageUri) => { postMessage(client, raid, imageUri) })
-
-
-
-    // console.log("posting to cier")
-
-    // const response = await fetch(`https://${MIDWARE_ADDRESS}/api/v1/event`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     ...raid,
-    //     specialFlag: "yeet",
-    //   }),
-    // });
-    // const results = await response.json();
-
-    // console.log(results)
-
-    // const generated_image = results[0] // we expect only 1 image
-
-    // console.log("URI:")
-    // console.log(generated_image.uri)
-    // if (generated_image.uri != "") {
-    //   postMessage(client, raid, generated_image.uri)
-    //   return
-    // }
-
-    // const socketUrl = `wss://${MIDWARE_ADDRESS}/api/v1/${generated_image.id}/status`;
-    // const ws = new WebSocket(socketUrl)
-
-    // ws.on('open', function open() {
-    //   console.log("ws opened")
-    // });
-
-    // ws.on('message', function message(data) {
-    //   console.log('received: %s', data);
-    //   if (String(data) === "initiated") {
-    //     console.log(`jobId ${generated_image.id} initiated`)
-    //   }
-    //   else if (String(data) === "generating") {
-    //     console.log(`jobId ${generated_image.id} generating`)
-    //   }
-    //   else if (String(data) === "done") {
-    //     console.log(`jobId ${generated_image.id} done`)
-    //     ws.close()
-    //   }
-    //   else {
-    //     const body = JSON.parse(String(data))
-    //     postMessage(client, raid, body.uri)
-    //   }
-    // });
   } catch (e) {
     console.error(e);
   }
@@ -372,16 +319,11 @@ export = {
     try {
       console.log("checking for raids");
       const raids = await fetchRealmHistory(lastTimestamp);
-
       if (raids && raids.length) {
         await generateAndPostImage(client, raids[0]);
         lastTimestamp = Math.max(lastTimestamp, raids[0].timestamp);
-        // raids.forEach(async (raid: any) => {
-        //   await generateAndPostImage(client, raid);
-        //   // set lastTimestamp to the timestamp of the last raid if it's larger
-        //   lastTimestamp = Math.max(lastTimestamp, raid.timestamp);
-        // });
       }
+
     } catch (e) {
       console.error(
         `Error sending raid message at timestamp ${lastTimestamp}`,

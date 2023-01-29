@@ -1,14 +1,8 @@
 import fetch from 'node-fetch';
 import { SlashCommandBuilder } from "@discordjs/builders";
 
-
-
-
 const fetchQuestion = async (question: string) => {
-
-
     let url = `https://bot-production-da53.up.railway.app/docs/question`
-
     let res = await fetch(url, {
         method: "POST",
         headers: {
@@ -25,10 +19,7 @@ const fetchQuestion = async (question: string) => {
     if (res.status != 200) {
         throw new Error(`Couldn't retrieve metadata: ${res.statusText}`);
     }
-
     let data = await res.json();
-
-    console.log(data)
 
     return data;
 }
