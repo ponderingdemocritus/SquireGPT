@@ -30,7 +30,7 @@ const POD_BEARER = process.env.POD_BEARER;
 
 const HEADER = {
   'Content-Type': 'application/json',
-  'Authorization': `BEARER ${POD_BEARER}`
+  'Authorization': `Bearer ${POD_BEARER}`
 }
 
 const fetchRealmHistory = async (timestamp: number) => {
