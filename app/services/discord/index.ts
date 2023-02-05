@@ -1,4 +1,4 @@
-import { Client, Intents, Collection } from "discord.js";
+import { Client, Collection, GatewayIntentBits } from "discord.js";
 import fs from "fs";
 import { discordConfig } from "../../config";
 import cron from "node-cron";
@@ -9,9 +9,9 @@ import { getPrice } from "./status/price";
 
 const client = new Client({
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions
   ]
 });
 
@@ -37,7 +37,7 @@ client.once("ready", async () => {
     raids.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {
-    client.user?.setActivity(await getPrice(), { type: "WATCHING" });
+    client.user?.setActivity(await getPrice(), { name: "WATCHING" });
   });
 });
 

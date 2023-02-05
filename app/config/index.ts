@@ -29,3 +29,12 @@ export const biblioConfig = {
   indexerUrl: "https://dev-indexer-gu226.ondigitalocean.app/graphql",
   atlasBaseUrl: process.env.ATLAS_URL
 };
+
+export const podConfig = {
+  endpoint: "https://api.runpod.ai/v1/",
+  podBearer: process.env.POD_BEARER,
+  header: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.POD_BEARER}`
+  }
+};

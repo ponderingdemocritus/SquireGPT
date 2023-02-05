@@ -1,6 +1,9 @@
+import fetch from "node-fetch";
 import { getRealm } from './graphql'
 import { resources } from "../../db/resources";
 import { request } from "graphql-request";
+import { podConfig } from '../../config';
+import { formatFixed } from '@ethersproject/bignumber';
 
 export const settings = {
     method: "GET"
@@ -147,3 +150,39 @@ export const buildMessage = async (openSeaEvent: any, sale: boolean) => {
         }
     };
 };
+
+export async function createImage(prompt: any, model: string) {
+    // Initial call to start image creation
+    const initResponse = await fetch(`${podConfig.endpoint + model}/run`, {
+        method: 'POST',
+        headers: podConfig.header,
+        body: JSON.stringify(prompt)
+    });
+
+    const response = await initResponse.json();
+
+    const jobId = response.id;
+
+    // Poll endpoint until image is complete
+    let imageComplete = false;
+    let imageUri;
+    while (!imageComplete) {
+        const pollResponse = await fetch(`${podConfig.endpoint + model}/status/` + jobId, {
+            method: 'GET',
+            headers: podConfig.header,
+        });
+        const pollJson = await pollResponse.json();
+
+        if (pollJson.status == 'COMPLETED') {
+            imageComplete = true;
+            imageUri = pollJson.output[0].image;
+        } else {
+            // Wait for 1 second before polling again
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+
+    return imageUri;
+}
+
+export const formatEther = (value: string) => formatFixed(value, 18);

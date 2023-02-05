@@ -1,13 +1,8 @@
 require("dotenv").config();
 import fetch from "node-fetch";
 import { biblioConfig, discordConfig } from "../../../config";
-import { formatFixed } from "@ethersproject/bignumber";
-import { MessageActionRow, MessageButton } from "discord.js";
-import { MessageButtonStyles } from "discord.js/typings/enums";
 import { resources } from "../../../db/resources";
-// import WebSocket from 'ws';
-
-const formatEther = (value: string) => formatFixed(value, 18);
+import { createImage, formatEther } from "../../../services/utils/helpers";
 
 /*
   1. query indexer for new events
@@ -19,18 +14,7 @@ const formatEther = (value: string) => formatFixed(value, 18);
 
 */
 
-// const MIDWARE_ADDRESS = "127.0.0.1:8000" // no http!
-// const MIDWARE_ADDRESS = "fastapi-production-e3aa.up.railway.app"
-
-const POD_ENDPOINT = "https://api.runpod.ai/v1/";
-const MODEL = "sd-openjourney/";
-
-const POD_BEARER = process.env.POD_BEARER;
-
-const HEADER = {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${POD_BEARER}`
-}
+const MODEL = "sd-openjourney";
 
 const fetchRealmHistory = async (timestamp: number) => {
   try {
@@ -173,20 +157,20 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
   console.log("MESSAGE:")
   console.log(message)
 
-  const row = new MessageActionRow().addComponents(
-    new MessageButton()
+  // const row = new MessageActionRow().addComponents(
+  //   new MessageButton()
 
-      .setLabel("See Realm")
-      .setURL(message.attributes.url)
-      .setStyle(MessageButtonStyles.LINK)
-  );
+  //     .setLabel("See Realm")
+  //     .setURL(message.attributes.url)
+  //     .setStyle(MessageButtonStyles.LINK)
+  // );
 
   client.channels
     .fetch(discordConfig.raidsChannel)
     .then((channel: any) => {
       channel.send({
         embeds: [message.attributes],
-        components: [row],
+        // components: [row],
       });
     })
     .then((text: any) => {
@@ -225,43 +209,12 @@ const LOSS_PROMPT = {
   }
 }
 
-async function createImage(success: boolean) {
-  // Initial call to start image creation
-  const initResponse = await fetch(`${POD_ENDPOINT + MODEL}run`, {
-    method: 'POST',
-    headers: HEADER,
-    body: JSON.stringify(success ? WIN_PROMPT : LOSS_PROMPT)
-  });
 
-  const response = await initResponse.json();
-
-  const jobId = response.id;
-
-  // Poll endpoint until image is complete
-  let imageComplete = false;
-  let imageUri;
-  while (!imageComplete) {
-    const pollResponse = await fetch(`${POD_ENDPOINT + MODEL}status/` + jobId, {
-      method: 'GET',
-      headers: HEADER,
-    });
-    const pollJson = await pollResponse.json();
-
-    if (pollJson.status == 'COMPLETED') {
-      imageComplete = true;
-      imageUri = pollJson.output[0].image;
-    } else {
-      // Wait for 1 second before polling again
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-  }
-
-  return imageUri;
-}
 
 const generateAndPostImage = async (client: any, raid: any) => {
+  let prompt = raid.data.success ? WIN_PROMPT : LOSS_PROMPT
   try {
-    createImage(raid.data.success).then((imageUri) => { postMessage(client, raid, imageUri) })
+    createImage(prompt, MODEL).then((imageUri: string) => { postMessage(client, raid, imageUri) })
   } catch (e) {
     console.error(e);
   }

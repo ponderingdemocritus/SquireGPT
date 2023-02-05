@@ -6,17 +6,19 @@
   "author": "Pondering Democritus",
   "license": "MIT",
   "dependencies": {
-    "@discordjs/builders": "^0.12.0",
-    "@discordjs/rest": "^0.3.0",
+    "@discordjs/builders": "^1.4.0",
+    "@discordjs/rest": "^1.5.0",
     "@ethersproject/bignumber": "^5.6.2",
     "@types/express": "^4.17.13",
     "@types/node": "^16.11.6",
     "@types/node-cron": "^3.0.1",
+    "@types/node-fetch": "^2.6.2",
     "@types/sharp": "^0.30.0",
     "@types/twit": "^2.2.30",
+    "axios": "^1.2.1",
     "body-parser": "^1.19.1",
-    "discord-api-types": "^0.29.0",
-    "discord.js": "^13.6.0",
+    "discord-api-types": "^0.37.31",
+    "discord.js": "^14.7.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "graphql": "^16.3.0",
@@ -28,8 +30,7 @@
     "ts-node": "^10.4.0",
     "twit": "^2.2.11",
     "typescript": "^4.9.3",
-    "ws": "^8.11.0",
-    "axios": "^1.2.1"
+    "ws": "^8.11.0"
   },
   "scripts": {
     "start": "yarn build-ts && npm run serve && yarn watch-node",

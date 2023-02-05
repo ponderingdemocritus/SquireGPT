@@ -1,7 +1,6 @@
 require('dotenv').config();
 import { Router } from 'express';
 import client from '../services/discord';
-import { MessageAttachment } from 'discord.js';
 import { colours, text, images, final } from '../db/desiege';
 import { tweet } from '../services/twitter/tweet'
 import { Cast, Action } from '../types';
@@ -62,16 +61,16 @@ DesiegeRouter.post('/action', (req: Action, res: any) => {
     let file: any
     let num = 0
 
-    const getRandomInt = () => {
-        num = Math.floor(Math.random() * (images[offset].length - 1));
-    }
+    // const getRandomInt = () => {
+    //     num = Math.floor(Math.random() * (images[offset].length - 1));
+    // }
 
-    getRandomInt()
-    if (req.body.city_health === 0) {
-        file = new MessageAttachment('app/img/' + final[0][0]);
-    } else {
-        file = new MessageAttachment('app/img/' + images[offset][num]);
-    }
+    // getRandomInt()
+    // if (req.body.city_health === 0) {
+    //     file = new MessageAtt('app/img/' + final[0][0]);
+    // } else {
+    //     file = new MessageAttachment('app/img/' + images[offset][num]);
+    // }
 
     // tweet
     tweet(req.body, offset, num)

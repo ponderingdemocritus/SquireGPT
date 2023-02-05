@@ -1,6 +1,5 @@
 import fetch from 'node-fetch';
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { MessageEmbed } from "discord.js"
 
 const fetchFloor = async () => {
     let url = `https://api.coingecko.com/api/v3/simple/price?ids=lords&vs_currencies=USD`
@@ -27,11 +26,14 @@ export = {
     async execute(message: any) {
         fetchFloor()
             .then((floorPrice: any) => {
-                const exampleEmbed = new MessageEmbed()
-                    .setTitle('Lords Price')
-                    .setDescription(`Ser, The Lords Price is $${floorPrice.toFixed(3)} USD`)
-                    .setThumbnail('https://bibliothecadao.xyz/lords-icon.png')
-                message.channel.send({ embeds: [exampleEmbed] });
+                const embed = {
+                    title: 'Lords Price',
+                    description: `Ser, The Lords Price is $${floorPrice.toFixed(3)} USD`,
+                    image: {
+                        url: 'https://bibliothecadao.xyz/lords-icon.png'
+                    }
+                };
+                message.channel.send({ embeds: [embed] });
             })
             .catch((error: any) => message.channel.send(error.message));
     },
