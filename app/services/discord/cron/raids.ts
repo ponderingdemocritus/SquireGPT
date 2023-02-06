@@ -1,4 +1,5 @@
 require("dotenv").config();
+import { getUserIdByStarkAddress } from "../../../sqlite";
 import fetch from "node-fetch";
 import { biblioConfig, discordConfig } from "../../../config";
 import { resources } from "../../../db/resources";
@@ -152,18 +153,12 @@ const buildRaidMessage = (raid: any, imageUri: String) => {
 };
 
 const postMessage = async (client: any, raid: any, imageUri: String) => {
+
+  console.log(raid)
   const message = buildRaidMessage(raid, imageUri);
 
   console.log("MESSAGE:")
   console.log(message)
-
-  // const row = new MessageActionRow().addComponents(
-  //   new MessageButton()
-
-  //     .setLabel("See Realm")
-  //     .setURL(message.attributes.url)
-  //     .setStyle(MessageButtonStyles.LINK)
-  // );
 
   client.channels
     .fetch(discordConfig.raidsChannel)
@@ -189,6 +184,16 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
         e
       );
     });
+
+  const user_id = await getUserIdByStarkAddress(raid.realmOwner)
+
+  if (user_id) {
+    client.users.fetch(340080285993664512).then((user: any) => {
+      user.send({
+        embeds: [message.attributes]
+      });
+    });
+  }
 }
 
 const WIN_PROMPT = {
