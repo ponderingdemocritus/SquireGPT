@@ -19,9 +19,9 @@ export = {
         db.run('INSERT INTO users (user_id, stark_address) VALUES (?, ?)', [interaction.user.id, address], (err) => {
             if (err) {
                 console.error(err);
-                interaction.reply('An error occurred while storing your user ID and Ethereum address.');
+                interaction.reply('An error occurred while storing your user ID and Stark address.');
             } else {
-                interaction.reply('Your user ID and Ethereum address have been stored successfully.');
+                interaction.reply('Your user ID and Stark address have been stored successfully.');
             }
         });
 
