@@ -19,11 +19,9 @@ interface IAdventurer {
 const createPrompt = (props: IAdventurer) => {
     const { sex, race, skin, hair, eyes, occupation, pattern } = props;
 
-    const one = 'intricate intense symmetry! portrait of a ';
-    const end =
-        'desert background, dramatic lighting, fantasy, d&d, perfection';
+    const one = 'a ';
 
-    return one + sex + ' ' + race + ' with ' + skin + ' ' + ' and ' + pattern + ',' + hair + ',' + eyes + ',' + occupation + ',' + end;
+    return one + sex + ' ' + race + ' with ' + skin + ' ' + ' and ' + pattern + ',' + hair + ',' + eyes + ',' + occupation
 };
 
 
