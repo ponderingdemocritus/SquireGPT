@@ -201,7 +201,7 @@ export = {
             })
             .catch((error: any) => interaction.channel.send(error.message));
         try {
-            await interaction.channel.send({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         } catch (e) {
             console.log(e);
         }
