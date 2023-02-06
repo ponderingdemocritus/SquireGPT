@@ -21,7 +21,7 @@ const createPrompt = (props: IAdventurer) => {
 
     const one = 'intricate intense symmetry! portrait of a ';
     const end =
-        'desert background,  dramatic lighting, fantasy, d&d, perfection, dune, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha';
+        'desert background, dramatic lighting, fantasy, d&d, perfection';
 
     return one + sex + ' ' + race + ' with ' + skin + ' ' + ' and ' + pattern + ',' + hair + ',' + eyes + ',' + occupation + ',' + end;
 };
@@ -185,18 +185,26 @@ export = {
             }
         }
 
-        await createImage(prompt, MODEL)
+        await interaction.deferReply();
+
+        const embed = await createImage(prompt, MODEL)
             .then((res: any) => {
-                const embed = {
+                return {
                     title: 'Adventurer',
                     description: prompt.input.prompt,
                     image: {
                         url: res.split("?")[0]
                     }
                 };
-                console.log(embed)
-                interaction.channel.send({ embeds: [embed] });
+
+
             })
             .catch((error: any) => interaction.channel.send(error.message));
+        try {
+            await interaction.channel.send({ embeds: [embed] });
+        } catch (e) {
+            console.log(e);
+        }
+
     },
 };
