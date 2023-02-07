@@ -188,7 +188,7 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
   const user_id = await getUserIdByStarkAddress(raid.realmOwner)
 
   if (user_id) {
-    client.users.fetch(340080285993664512).then((user: any) => {
+    client.users.fetch(user_id).then((user: any) => {
       user.send({
         embeds: [message.attributes]
       });
