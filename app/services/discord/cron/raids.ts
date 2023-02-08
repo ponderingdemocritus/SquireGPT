@@ -165,18 +165,7 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
     .then((channel: any) => {
       channel.send({
         embeds: [message.attributes],
-        // components: [row],
       });
-    })
-    .then((text: any) => {
-      for (const resource of message.resources) {
-        const emoji = client.emojis.cache.find(
-          (emoji: any) => emoji.name === resource.replace(" ", "")
-        );
-        if (emoji) {
-          text.react(emoji);
-        }
-      }
     })
     .catch((e: any) => {
       console.error(
