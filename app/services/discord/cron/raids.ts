@@ -187,6 +187,8 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
 
   const user_id = await getUserIdByStarkAddress(raid.realmOwner)
 
+  console.log(user_id)
+
   if (user_id) {
     client.users.fetch(user_id).then((user: any) => {
       user.send({
