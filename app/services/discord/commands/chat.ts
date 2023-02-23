@@ -2,7 +2,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { OpenAI } from "langchain/llms";
 import { PromptTemplate } from "langchain/prompts";
-import { LLMChain } from "langchain/chains";
+// import { LLMChain } from "langchain/chains";
+import { BufferMemory } from "langchain/memory";
+// import eternum from "../../../data/eternum.json";
+import { ConversationChain } from "langchain/chains";
+
+const memory = new BufferMemory();
 
 const fetchQuestion = async (question: string) => {
     const model = new OpenAI({ temperature: 0.9 });
@@ -14,7 +19,9 @@ const fetchQuestion = async (question: string) => {
         inputVariables: ["question"],
     });
 
-    const chain = new LLMChain({ llm: model, prompt: prompt });
+    const chain = new ConversationChain({ llm: model, memory: memory, prompt: prompt });
+
+    // const chain = new LLMChain({ llm: model, prompt: prompt });
 
     const res = await chain.call({ question: question });
     
@@ -38,7 +45,7 @@ export = {
             .then((res: any) => {
                 return {
                     title: question,
-                    description: res.text,
+                    description: res.response,
                     // image: {
                     //     url: "https://media.discordapp.net/attachments/884213909106589716/1077582008143855616/AB41B2F9-A8EC-439E-83DF-76633A959BAF.png?width=599&height=899"
                     // }

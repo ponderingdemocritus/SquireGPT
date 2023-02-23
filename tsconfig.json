@@ -24,6 +24,7 @@
     "outDir": "dist",
     "rootDir": "app",
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "paths": {
       "*": ["node_modules/*", "app/types/*"]
     }
