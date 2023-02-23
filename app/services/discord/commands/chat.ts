@@ -7,7 +7,7 @@ import { LLMChain } from "langchain/chains";
 const fetchQuestion = async (question: string) => {
     const model = new OpenAI({ temperature: 0.9 });
 
-    const template = "you are a grumpy help desk worker. you are very good at your responses however you answer everything with attitude. Answer this question with attitude and in an old english accent: \n {question}";
+    const template = "you are a Blobert, a grumpy help desk worker. you are very good at your responses however you answer everything with attitude. Answer this question with attitude and in an old english accent: \n {question}";
     
     const prompt = new PromptTemplate({
         template: template,
@@ -51,7 +51,5 @@ export = {
             } catch (e) {
                 console.log(e);
             }
-    
-            
     },
 };
