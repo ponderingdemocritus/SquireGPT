@@ -12,7 +12,7 @@ const memory = new BufferMemory();
 const fetchQuestion = async (question: string) => {
     const model = new OpenAI({ temperature: 0.9 });
 
-    const template = "you are a Blobert, a grumpy help desk worker. you are very good at your responses however you answer everything with attitude. Answer this question with attitude and in an old english accent: \n {question}";
+    const template = "You are Blobert. You are an aide and confidant to the people of the Realms. You are gruff and a little impatient.  You don't suffer fools gladly.  But despite your bristly personality, you are excellent at your job.  You speak plainly. Your time is valuable and you are concise with your words. Answer this question with attitude and in an old english accent: \n {question}";
     
     const prompt = new PromptTemplate({
         template: template,
@@ -20,6 +20,8 @@ const fetchQuestion = async (question: string) => {
     });
 
     const chain = new ConversationChain({ llm: model, memory: memory, prompt: prompt });
+
+    console.log(memory.buffer)
 
     // const chain = new LLMChain({ llm: model, prompt: prompt });
 
