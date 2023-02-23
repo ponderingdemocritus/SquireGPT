@@ -1,24 +1,35 @@
 require('dotenv').config();
 import express from 'express';
 import ApiRouter from './router'
-import client from './services/discord';
+import { client as DiscordClient } from './services/discord';
 import { setupDiscordCommands } from './services/discord/deploy';
-import { Database } from 'sqlite3';
-import { createUsersTable } from './sqlite';
+// import { Database } from 'sqlite3';
+// import { createUsersTable } from './sqlite';
+// import { Client as PostgresClient } from 'pg';
+
 const app = express();
 const port = 3000;
 
-client
+DiscordClient
 
 setupDiscordCommands()
 
-export const db = new Database('db.sqlite');
+// export const db = new Database('db.sqlite');
 
-async function main(): Promise<void> {
-    await createUsersTable();
-}
+// export const client = new PostgresClient({
+//     host: 'app-1de1be1e-ff98-4f77-a735-68b1c35ad66c-do-user-10698562-0.b.db.ondigitalocean.com',
+//     user: 'doadmin',
+//     password: 'tQ8dnc03mOBrSjfx',
+//     database: 'squire',
+//     port: 25060,
+//     ssl: true
+// });
 
-main();
+// async function main(): Promise<void> {
+//     await createUsersTable();
+// }
+
+// main();
 
 app.use(express.json());
 

@@ -14,7 +14,8 @@ export const discordConfig = {
   token: process.env.DISCORD_TOKEN || "",
   salesChannel: process.env.DISCORD_SALES_CHANNEL,
   listingsChannel: process.env.DISCORD_LISTINGS_CHANNEL,
-  raidsChannel: process.env.DISCORD_RAIDS_CHANNEL
+  raidsChannel: process.env.DISCORD_RAIDS_CHANNEL,
+  imgCrawlChannels: process.env.DISCORD_RAIDS_CHANNEL ? ['1074443915270295712', '1004698995765035021'] : ['1050032823341424640']
 };
 
 export const openSeaConfig = {
@@ -38,3 +39,7 @@ export const podConfig = {
     'Authorization': `Bearer ${process.env.POD_BEARER}`
   }
 };
+
+export const railwayConfig = {
+  url: "https://bot-production-da53.up.railway.app"
+}

@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import { getRealm } from './graphql'
 import { resources } from "../../db/resources";
 import { request } from "graphql-request";
-import { podConfig } from '../../config';
+import { podConfig, railwayConfig } from '../../config';
 import { formatFixed } from '@ethersproject/bignumber';
 
 export const settings = {
@@ -186,3 +186,27 @@ export async function createImage(prompt: any, model: string) {
 }
 
 export const formatEther = (value: string) => formatFixed(value, 18);
+
+
+export const getLLM = async (prompt: string, endpoint: string) => {
+    let url = `${railwayConfig.url}${endpoint}`
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            question: prompt
+        }),
+    });
+
+    if (res.status == 404 || res.status == 400) {
+        throw new Error("Error retrieving collection stats.");
+    }
+    if (res.status != 200) {
+        throw new Error(`Couldn't retrieve metadata: ${res.statusText}`);
+    }
+    let data = await res.json();
+
+    return data.report;
+}

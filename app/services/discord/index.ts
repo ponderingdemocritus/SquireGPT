@@ -5,9 +5,11 @@ import cron from "node-cron";
 // import listings from "./cron/listings";
 // import sales from "./cron/sales";
 import raids from "./cron/raids";
+// import tome from "./cron/tome";
+import crawl from "./cron/crawl";
 import { getPrice } from "./status/price";
 
-const client = new Client({
+export const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -35,6 +37,7 @@ client.once("ready", async () => {
   // });
   cron.schedule("20 * * * * *", () => {
     raids.execute(client);
+    crawl.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {
     client.user?.setActivity(await getPrice(), { name: "WATCHING" });
@@ -81,5 +84,6 @@ client.on("messageCreate", (msg) => {
 });
 
 client.login(discordConfig.token);
+
 
 export default client;

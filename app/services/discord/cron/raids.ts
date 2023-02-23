@@ -1,5 +1,5 @@
 require("dotenv").config();
-import { getUserIdByStarkAddress } from "../../../sqlite";
+// import { getUserIdByStarkAddress } from "../../../sqlite";
 import fetch from "node-fetch";
 import { biblioConfig, discordConfig } from "../../../config";
 import { resources } from "../../../db/resources";
@@ -174,17 +174,17 @@ const postMessage = async (client: any, raid: any, imageUri: String) => {
       );
     });
 
-  const user_id = await getUserIdByStarkAddress(raid.realmOwner)
+  // const user_id = await getUserIdByStarkAddress(raid.realmOwner)
 
-  console.log(user_id)
+  // console.log(user_id)
 
-  if (user_id) {
-    client.users.fetch(user_id).then((user: any) => {
-      user.send({
-        embeds: [message.attributes]
-      });
-    });
-  }
+  // if (user_id) {
+  //   client.users.fetch(user_id).then((user: any) => {
+  //     user.send({
+  //       embeds: [message.attributes]
+  //     });
+  //   });
+  // }
 }
 
 const WIN_PROMPT = {
