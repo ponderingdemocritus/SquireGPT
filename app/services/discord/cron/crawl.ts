@@ -3,8 +3,8 @@ require('dotenv').config();
 import { discordConfig } from "../../../config";
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({
-    accessKeyId: 'AKIARAFOFXHIEOEV65QF',
-    secretAccessKey: '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',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'eu-west-1'
 });
 

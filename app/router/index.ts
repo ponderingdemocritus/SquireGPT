@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import BriqRouter from './briq';
-import DesiegeRouter from './desiege';
+import Agents from './agents';
 
 const apiRouter = Router();
 
-apiRouter.use('/', BriqRouter);
-apiRouter.use('/', DesiegeRouter);
+apiRouter.use('/', Agents);
 
 export default  apiRouter

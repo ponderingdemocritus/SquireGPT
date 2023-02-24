@@ -1,10 +1,11 @@
 require('dotenv').config();
 
+import { getBlobert } from "../../../agents";
 import { discordConfig } from "../../../config";
 import { getLLM } from "../../../services/utils/helpers";
 
 const entity_memory_conversation = '/docs/conversation'
-const ask_a_question = '/docs/prompter'
+// const ask_a_question = '/docs/prompter'
 
 const entityPrompt = 'create a new character that has not been seen before in this world. The character could be a anything and be a protagonist or antagonist.'
 
@@ -21,11 +22,11 @@ export = {
         let count = 0;
         try {
 
-            const new_character = await getLLM(entityPrompt, ask_a_question);
+            const new_character = await getBlobert(entityPrompt);
 
             console.log(new_character)
 
-            await getLLM(new_character, entity_memory_conversation);
+            await getBlobert(entityPrompt);
 
             const tell_me_a_story = await getLLM(count == 0 ? tellMeAStory : "Keep the story going in a new direction", entity_memory_conversation);
 
