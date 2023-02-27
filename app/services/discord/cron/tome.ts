@@ -1,63 +1,76 @@
-require('dotenv').config();
-
-import { getBlobert } from "../../../agents";
+import { visir_chat, blobert_chat } from "../../../../app/server";
 import { discordConfig } from "../../../config";
-import { getLLM } from "../../../services/utils/helpers";
-
-const entity_memory_conversation = '/docs/conversation'
-// const ask_a_question = '/docs/prompter'
-
-const entityPrompt = 'create a new character that has not been seen before in this world. The character could be a anything and be a protagonist or antagonist.'
-
-const tellMeAStory = 'tell me a story about all the characters in this world. Make it complex and interesting. Use Jrr Tolkien as a reference.'
-
+import { DiscordMessage } from "../class";
 
 export = {
     name: 'tome',
     description: 'tome bot',
-    interval: 10000,
     enabled: discordConfig.salesChannel != null,
     async execute(client: any) {
 
-        let count = 0;
-        try {
+        let key = 0;
 
-            const new_character = await getBlobert(entityPrompt);
+        const discord_message = new DiscordMessage(client, discordConfig.raidsChannel);
 
-            console.log(new_character)
+        let question = "";
+        let response = "";
 
-            await getBlobert(entityPrompt);
 
-            const tell_me_a_story = await getLLM(count == 0 ? tellMeAStory : "Keep the story going in a new direction", entity_memory_conversation);
+       
 
-            console.log(tell_me_a_story)
+            try {
 
-            client.channels
-                .fetch(discordConfig.raidsChannel)
-                .then((channel: any) => {
-                    channel.send({
-                        embeds: [{
-                            title: 'Story Time',
-                            description: tell_me_a_story
-                        }],
-                    });
-                })
-                .catch((e: any) => {
-                    console.error(
-                        `Error sending raid message at timestamp`,
-                        e
-                    );
+                const blobert_response = await blobert_chat.getResponse(key == 0 ? `You are interviewing Gandalf. What's your question to Gandalf? Introduce gandalf first and explaining what you will be talking about.` : `Gandalf answered: ${response}. What do you think about this, and ask another question keeping the conversation going?`);
+
+
+                await discord_message.sendMessage({
+                    title: `Blobert`,
+                    description: `${blobert_response.response}`,
+                    thumbnail: {
+                        url: 'https://media.discordapp.net/attachments/884213909106589716/1077582008143855616/AB41B2F9-A8EC-439E-83DF-76633A959BAF.png?width=599&height=899',
+                    },
                 });
 
-            count++;
+                question = blobert_response.response;
 
 
-        } catch (e) {
-            console.error(
-                `Error sending raid message at timestamp`,
-                e
-            );
-        }
 
+            } catch (e) {
+                console.error(
+                    `Error sending raid message at timestamp`,
+                    e
+                );
+            }
+
+            
+
+            try {
+
+                const visir_response = await visir_chat.getResponse(`Blobert asked: ${question}. What's your answer, be detailed, passionate and descriptive?`);
+
+                await discord_message.sendMessage({
+                    title: `Gandalf`,
+                    description: `${visir_response.response}`,
+                    thumbnail: {
+                        url: 'https://static.wikia.nocookie.net/lotr/images/e/e7/Gandalf_the_Grey.jpg',
+                    },
+                });
+
+                key++;
+
+                response = visir_response.response;
+
+            } catch (e) {
+                console.error(
+                    `Error sending raid message at timestamp`,
+                    e
+                );
+            }
+
+
+        
+
+
+    
     }
 };

@@ -1,6 +1,6 @@
 // import fetch from 'node-fetch';
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { getBlobert } from "../../../agents";
+import { ConversationAgent, visir } from "../../../agents";
 
 export = {
     data: new SlashCommandBuilder()
@@ -15,14 +15,17 @@ export = {
 
         await interaction.deferReply();
 
-        let embed = await getBlobert(question)
+        const chat = new ConversationAgent(0.9, visir);
+
+        let embed = await chat.getResponse(question)
             .then((res: any) => {
                 return {
                     title: question,
                     description: res.response
                 };
             })
-            .catch((error: any) => interaction.channel.send(error.message));
+            .catch((error: any) => console.log(error));
+            
 
             try {
                 await interaction.editReply({ embeds: [embed] });

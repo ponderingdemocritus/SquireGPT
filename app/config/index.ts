@@ -12,9 +12,9 @@ export const discordConfig = {
   client_id: process.env.DISCORD_CLIENT_ID || "",
   guild_id: process.env.DISCORD_GUILD_ID || "",
   token: process.env.DISCORD_TOKEN || "",
-  salesChannel: process.env.DISCORD_SALES_CHANNEL,
-  listingsChannel: process.env.DISCORD_LISTINGS_CHANNEL,
-  raidsChannel: process.env.DISCORD_RAIDS_CHANNEL,
+  salesChannel: process.env.DISCORD_SALES_CHANNEL || "",
+  listingsChannel: process.env.DISCORD_LISTINGS_CHANNEL || "",
+  raidsChannel: process.env.DISCORD_RAIDS_CHANNEL || "",
   imgCrawlChannels: process.env.DISCORD_RAIDS_CHANNEL ? ['1074443915270295712', '1004698995765035021'] : ['1050032823341424640']
 };
 

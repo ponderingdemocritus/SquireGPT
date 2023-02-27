@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express from 'express';
+import { blobert, ConversationAgent, visir } from './agents';
 import ApiRouter from './router'
 import { client as DiscordClient } from './services/discord';
 import { setupDiscordCommands } from './services/discord/deploy';
@@ -30,6 +31,9 @@ setupDiscordCommands()
 // }
 
 // main();
+
+export const visir_chat = new ConversationAgent(0.9, visir);
+export const blobert_chat = new ConversationAgent(0.9, blobert);
 
 app.use(express.json());
 

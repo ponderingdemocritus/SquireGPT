@@ -8,6 +8,7 @@ import raids from "./cron/raids";
 // import tome from "./cron/tome";
 import crawl from "./cron/crawl";
 import { getPrice } from "./status/price";
+// import tome from "./cron/tome";
 
 export const client = new Client({
   intents: [
@@ -38,6 +39,7 @@ client.once("ready", async () => {
   cron.schedule("20 * * * * *", () => {
     raids.execute(client);
     crawl.execute(client);
+    // tome.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {
     client.user?.setActivity(await getPrice(), { name: "WATCHING" });

@@ -1,10 +1,8 @@
-import twit from 'twit';
+
 import fs from 'fs'
 import { text, images, final } from '../../db/desiege';
-import { twitterConfig } from '../../config'
 import { Cast } from '../../types';
-
-const twitterClient = new twit(twitterConfig);
+import { twitterClient } from '.';
 
 export async function tweet(body: Cast, offset: number, random: number) {
 

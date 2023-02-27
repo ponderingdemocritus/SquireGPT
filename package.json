@@ -26,7 +26,7 @@
     "express": "^4.17.2",
     "graphql": "^16.3.0",
     "graphql-request": "^4.1.0",
-    "langchain": "^0.0.10",
+    "langchain": "^0.0.11",
     "node-cron": "^3.0.0",
     "nodemon": "^2.0.15",
     "openai": "^3.1.0",
@@ -37,6 +37,7 @@
     "starknet": "^3.5.1",
     "ts-node": "^10.4.0",
     "twit": "^2.2.11",
+    "twitter-api-sdk": "^1.2.1",
     "typescript": "^4.9.3",
     "ws": "^8.11.0"
   },
