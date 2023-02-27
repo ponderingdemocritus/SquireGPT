@@ -38,8 +38,9 @@ client.once("ready", async () => {
   // });
   cron.schedule("20 * * * * *", () => {
     raids.execute(client);
+  });
+  cron.schedule("* * 24 * * *", () => {
     crawl.execute(client);
-    // tome.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {
     client.user?.setActivity(await getPrice(), { name: "WATCHING" });
