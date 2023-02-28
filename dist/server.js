@@ -3,8 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.blobert_chat = exports.visir_chat = void 0;
 require('dotenv').config();
 const express_1 = __importDefault(require("express"));
+const agents_1 = require("./agents");
 const router_1 = __importDefault(require("./router"));
 const discord_1 = require("./services/discord");
 const deploy_1 = require("./services/discord/deploy");
@@ -28,6 +30,8 @@ discord_1.client;
 //     await createUsersTable();
 // }
 // main();
+exports.visir_chat = new agents_1.ConversationAgent(0.9, agents_1.visir);
+exports.blobert_chat = new agents_1.ConversationAgent(0.9, agents_1.blobert);
 app.use(express_1.default.json());
 app.use("/", router_1.default);
 app.listen(port, () => {

@@ -21,8 +21,8 @@ async function extractImages(channel: any) {
         return {
             id: content.id,
             prompt: content.content.match(/\*\*(.+?)\*\*/)?.[1],
-            url: content.attachments.first().url,
-            user: content.attachments.first().url.match(/\/(\w+)_/)?.[1].split('_')[0],
+            url: content.attachments.first() ? content.attachments.first().url: "",
+            user: content.attachments.first() ? content.attachments.first().url.match(/\/(\w+)_/)?.[1].split('_')[0]: "",
             timestamp: content.createdTimestamp,
             reactions: content.reactions.cache.map((reaction: any) => {
                 return {

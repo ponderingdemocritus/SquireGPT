@@ -39,7 +39,7 @@ client.once("ready", async () => {
   cron.schedule("20 * * * * *", () => {
     raids.execute(client);
   });
-  cron.schedule("* * 24 * * *", () => {
+  cron.schedule("59 59 23 * * *", () => {
     crawl.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {

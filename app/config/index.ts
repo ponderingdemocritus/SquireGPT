@@ -15,7 +15,7 @@ export const discordConfig = {
   salesChannel: process.env.DISCORD_SALES_CHANNEL || "",
   listingsChannel: process.env.DISCORD_LISTINGS_CHANNEL || "",
   raidsChannel: process.env.DISCORD_RAIDS_CHANNEL || "",
-  imgCrawlChannels: process.env.DISCORD_RAIDS_CHANNEL ? ['1074443915270295712', '1004698995765035021'] : ['1050032823341424640']
+  imgCrawlChannels: ['1050032823341424640', '1047390021088464986']
 };
 
 export const openSeaConfig = {
