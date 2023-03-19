@@ -26,7 +26,7 @@ const createPrompt = (props: IAdventurer) => {
 
 
 
-export = {
+const adventurerCommand = {
     data: new SlashCommandBuilder()
         .setName("adventurer")
         .setDescription("Build an Adventurer")
@@ -206,3 +206,5 @@ export = {
 
     },
 };
+
+export default adventurerCommand;

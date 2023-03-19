@@ -19,7 +19,7 @@ const fetchFloor = async () => {
     return Number(data.lords.usd);
 }
 
-export = {
+const floorCommand = {
     data: new SlashCommandBuilder()
         .setName("lords")
         .setDescription("Gets the latest Lords Price"),
@@ -38,3 +38,5 @@ export = {
             .catch((error: any) => message.channel.send(error.message));
     },
 };
+
+export default floorCommand;

@@ -2,7 +2,7 @@ import { visir_chat, blobert_chat } from "../../../../app/server";
 import { discordConfig } from "../../../config";
 import { DiscordMessage } from "../class";
 
-export = {
+export default {
     name: 'tome',
     description: 'tome bot',
     enabled: discordConfig.salesChannel != null,

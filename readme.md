@@ -1,28 +1,21 @@
-# Squire: Discord & Twitter Bot
+# Squire
 
-Squire is a multitalented bot. He interfaces with Discord and Twitter. Currently this repo is heavily catered towards the needs of Bibliotheca DAO and the Lootverse in general.
+Squire is a multitalented bot that interfaces with Discord and Twitter. Currently, this repo is heavily catered towards the needs of Bibliotheca DAO and the Lootverse in general.
 
-Further abstraction is needed to make this bot plug and playable by other teams. But by all means fork him and customise.
-
----
-
-## GOAL
-
-The goal of this little bot is to be the interface between StarkNet and Discord. It aims to be the go-to resource for all Adventurers within StarkNet.
+However, further abstraction is needed to make this bot plug and playable by other teams. But by all means, fork him and customize.
 
 ---
 
 ## What Squire currently does:
 
-- Receives Desiege Updates & posts to discord & twitter.
 - Fetches Realm Information
 - Fetches Crypts & Caverns Information
 
 ---
 
-# Contributing
+## Contributing
 
-## Getting started
+### Getting started
 
 1. [Create a Discord App (bot)](https://discord.com/developers/applications) to test updates in your server.
 2. Visit the 'OAuth2' tab of the Discord Developer Portal and check the 'applications.commands' scope. Copy the generated URL and visit it to grant permissions to your bot.
@@ -30,7 +23,7 @@ The goal of this little bot is to be the interface between StarkNet and Discord.
 3. (optional) Install [Twurl](https://github.com/twitter/twurl) and, using your Twitter Developer consumer key & secret, generate the access token & access secret.
 4. 
 
-## Environment Setup
+### Environment Setup
 Edit `example.env` with the following environment variables:
 * DISCORD_TOKEN: A [discord bot token](https://www.writebots.com/discord-bot-token/) created via the app's "Bot -> Build-a-bot" menu.
 * DISCORD_CLIENT_ID: A discord bot client ID created via the app's "OAuth2" menu.
@@ -59,11 +52,6 @@ yarn && yarn start
 5. Add a graphql query to `/app/services/utils/graphql/index.ts`
 6. Run locally and test on your own server
 
-# TODO:
-
-- Add subscriptions to listen to indexer and publish updates to discord.
-- Add more utility functions for the Realms, Crypts, Lootverse in general
-
 
 # FAQ
 
@@ -74,3 +62,7 @@ A: This means that your application doesn't have permission for the discord serv
 First, make sure you've granted the bot the `applications.commands` OAuth2 scope [Docs](https://discord.com/developers/docs/topics/oauth2) and visited the URL under the 'OAuth2' tab in the [Discord developer dashboard for your bot](https://discord.com/developers/applications/).
 
 Second, double check that your `DISCORD_GUILD_ID` is set for the correct channel.
+
+
+export NODE_TLS_REJECT_UNAUTHORIZED='0'
+export NODE_OPTIONS='--experimental-fetch'

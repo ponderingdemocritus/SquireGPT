@@ -35,7 +35,7 @@ async function extractImages(channel: any) {
     return imageMessages;
 }
 
-export = {
+export default {
     name: 'tome',
     description: 'tome bot',
     interval: 10000,

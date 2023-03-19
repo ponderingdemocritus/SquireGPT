@@ -259,7 +259,7 @@ const generateAndPostImage = async (client: any, raid: any) => {
 let lastTimestamp = new Date(2022, 11, 1).getTime();
 lastTimestamp = 1670959403000;
 
-export = {
+export default {
   name: "raid",
   description: "raid bot",
   interval: 1000,

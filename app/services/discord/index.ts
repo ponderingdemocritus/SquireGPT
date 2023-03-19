@@ -24,11 +24,16 @@ const commandFiles = fs
   .readdirSync("app/services/discord/commands")
   .filter((file) => file.endsWith(".ts"));
 
+  console.log(commandFiles)
+
 client.once("ready", async () => {
   for (const file of commandFiles) {
     let name = file.replace(".ts", ".js");
+
     const command = require(`./commands/${name}`);
-    client.commands.set(command.data.name, command);
+
+    // console.log(command.data.name)
+    client.commands.set(command.default.data.name, command);
   }
   // cron.schedule("*/2 * * * *", () => {
   //   sales.execute(client);
@@ -39,7 +44,7 @@ client.once("ready", async () => {
   cron.schedule("20 * * * * *", () => {
     raids.execute(client);
   });
-  cron.schedule("59 59 23 * * *", () => {
+  cron.schedule("* * 1 * * *", () => {
     crawl.execute(client);
   });
   cron.schedule("*/2 * * * *", async () => {
@@ -55,7 +60,7 @@ client.on("interactionCreate", async (interaction) => {
   if (!command) return;
 
   try {
-    await command.execute(interaction);
+    await command.default.execute(interaction);
   } catch (error) {
     console.error(error);
     await interaction.reply({

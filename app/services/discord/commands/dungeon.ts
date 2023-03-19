@@ -25,7 +25,7 @@ const fetchCNC = async (id: number) => {
     }
 };
 
-export = {
+const dungeonCommand = {
     data: new SlashCommandBuilder()
         .setName("dungeon")
         .setDescription("Replies with your Crypts and Caverns dungeon details")
@@ -41,3 +41,5 @@ export = {
         });
     },
 };
+
+export default dungeonCommand;

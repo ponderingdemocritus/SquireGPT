@@ -1,5 +1,7 @@
-import axios from 'axios'
+
 export const getPrice = async () => {
+
+    const { default: axios } = await import('axios')
 
     let lordsPriceUSD: number = 0;
 

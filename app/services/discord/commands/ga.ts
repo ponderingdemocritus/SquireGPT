@@ -30,7 +30,7 @@ const fetchGA = async (id: number) => {
     }
 };
 
-export = {
+const gaCommand = {
     data: new SlashCommandBuilder()
         .setName("ga")
         .setDescription("Replies with your GA details")
@@ -46,3 +46,5 @@ export = {
         });
     },
 };
+
+export default gaCommand;

@@ -4,7 +4,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 
 
 
-export = {
+const addressCommand = {
     data: new SlashCommandBuilder()
         .setName("address")
         .setDescription("add address to your profile")
@@ -29,3 +29,5 @@ export = {
 
     },
 };
+
+export default addressCommand;

@@ -11,7 +11,7 @@ Agent.post('/chat', async (req: any, res: any) => {
 
     let response;
 
-    const chat = new ConversationAgent(0.9, blobert);
+    const chat = new ConversationAgent(blobert);
 
     try {
         response = await chat.getResponse(question);

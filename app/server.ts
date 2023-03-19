@@ -32,8 +32,8 @@ setupDiscordCommands()
 
 // main();
 
-export const visir_chat = new ConversationAgent(0.9, visir);
-export const blobert_chat = new ConversationAgent(0.9, blobert);
+export const visir_chat = new ConversationAgent(visir);
+export const blobert_chat = new ConversationAgent(blobert);
 
 app.use(express.json());
 

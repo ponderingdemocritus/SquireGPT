@@ -10,7 +10,7 @@ export const setupDiscordCommands = () => {
     for (const file of commandFiles) {
         let name = file.replace(".ts", ".js")
         const command = require(`./commands/${name}`);
-        commands.push(command.data.toJSON());
+        commands.push(command.default.data.toJSON());
     }
 
     const rest = new REST({ version: '10' }).setToken(discordConfig.token);

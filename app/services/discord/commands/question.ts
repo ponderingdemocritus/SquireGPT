@@ -24,7 +24,7 @@ const fetchQuestion = async (question: string) => {
     return data;
 }
 
-export = {
+const questionCommand = {
     data: new SlashCommandBuilder()
         .setName("question")
         .setDescription("Asks a Question")
@@ -48,3 +48,5 @@ export = {
             .catch((error: any) => interaction.channel.send(error.message));
     },
 };
+
+export default questionCommand;

@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "nodenext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2016", // or newer if your node.js version supports this
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
@@ -15,7 +15,7 @@
     "noFallthroughCasesInSwitch": true,
     "composite": false,
     "noImplicitAny": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "lib": ["dom", "es2016", "esnext.asynciterable"],
     "sourceMap": true,
     "emitDecoratorMetadata": true,

@@ -30,8 +30,8 @@ discord_1.client;
 //     await createUsersTable();
 // }
 // main();
-exports.visir_chat = new agents_1.ConversationAgent(0.9, agents_1.visir);
-exports.blobert_chat = new agents_1.ConversationAgent(0.9, agents_1.blobert);
+exports.visir_chat = new agents_1.ConversationAgent(agents_1.visir);
+exports.blobert_chat = new agents_1.ConversationAgent(agents_1.blobert);
 app.use(express_1.default.json());
 app.use("/", router_1.default);
 app.listen(port, () => {

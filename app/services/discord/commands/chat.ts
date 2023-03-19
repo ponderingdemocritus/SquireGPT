@@ -2,7 +2,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { blobert, ConversationAgent } from "../../../agents";
 
-export = {
+export default {
     data: new SlashCommandBuilder()
         .setName("chat")
         .setDescription("Chat with me")
@@ -13,15 +13,23 @@ export = {
     async execute(interaction: any) {
         const question = interaction.options.getString("q");
 
+        // await sqlRun()
+
         await interaction.deferReply();
 
-        const chat = new ConversationAgent(0.9, blobert);
+        const chat = new ConversationAgent(blobert);
+
+        // console.log(chat)
+
+        
 
         let embed = await chat.getResponse(question)
             .then((res: any) => {
+
+                console.log(res)
                 return {
                     title: question,
-                    description: res.response
+                    description: res
                 };
             })
             .catch((error: any) => console.log(error));

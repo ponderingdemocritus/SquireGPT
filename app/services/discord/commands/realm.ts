@@ -102,7 +102,7 @@ const fetchRealm = async (id: number) => {
   };
 };
 
-export = {
+const realmCommand = {
   data: new SlashCommandBuilder()
     .setName("realm")
     .setDescription("Replies with your Realm details")
@@ -130,3 +130,5 @@ export = {
     }
   },
 };
+
+export default realmCommand;
