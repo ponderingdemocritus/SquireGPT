@@ -8,6 +8,9 @@ RUN apk add --no-cache python3 py3-pip && \
     python3 -m ensurepip && \
     pip3 install --no-cache --upgrade pip setuptools
 
+# Set Python path
+ENV PYTHONPATH=/usr/src/app
+
 # Install Node.js dependencies
 COPY package*.json ./
 RUN npm install
