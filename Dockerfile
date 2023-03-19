@@ -11,9 +11,19 @@ RUN apk add --no-cache python3 py3-pip && \
 # Set Python path
 ENV PYTHONPATH=/usr/src/app
 
+# Install build dependencies
+RUN apk add --no-cache --virtual .build-deps \
+    g++ \
+    make \
+    libc-dev \
+    libgcc
+
 # Install Node.js dependencies
 COPY package*.json ./
 RUN npm install
+
+# Remove build dependencies
+RUN apk del .build-deps
 
 # Copy app source
 COPY . .
