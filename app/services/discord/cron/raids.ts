@@ -153,13 +153,7 @@ const buildRaidMessage = (raid: any, imageUri: String) => {
 };
 
 const postMessage = async (client: any, raid: any, imageUri: String) => {
-
-  console.log(raid)
   const message = buildRaidMessage(raid, imageUri);
-
-  console.log("MESSAGE:")
-  console.log(message)
-
   client.channels
     .fetch(discordConfig.raidsChannel)
     .then((channel: any) => {

@@ -1,4 +1,5 @@
 require('dotenv').config();
+import { PineconeClient } from '@pinecone-database/pinecone';
 import express from 'express';
 import { blobert, ConversationAgent, visir } from './agents';
 import ApiRouter from './router'
@@ -15,6 +16,10 @@ DiscordClient
 
 setupDiscordCommands()
 
+export const pinecone = new PineconeClient();
+
+
+
 // export const db = new Database('db.sqlite');
 
 // export const client = new PostgresClient({
@@ -26,11 +31,14 @@ setupDiscordCommands()
 //     ssl: true
 // });
 
-// async function main(): Promise<void> {
-//     await createUsersTable();
-// }
+async function main(): Promise<void> {
+    await pinecone.init({
+        environment: "us-central1-gcp",
+        apiKey: process.env.PINECONE_KEY || "",
+    });
+}
 
-// main();
+main();
 
 export const visir_chat = new ConversationAgent(visir);
 export const blobert_chat = new ConversationAgent(blobert);
