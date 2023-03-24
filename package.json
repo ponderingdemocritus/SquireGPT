@@ -30,7 +30,7 @@
     "graphql": "^16.3.0",
     "graphql-request": "^4.1.0",
     "hnswlib-node": "^1.4.2",
-    "langchain": "^0.0.36",
+    "langchain": "^0.0.39",
     "node-addon-api": "^6.0.0",
     "node-cron": "^3.0.0",
     "nodemon": "^2.0.15",
@@ -51,6 +51,7 @@
   "scripts": {
     "start": "yarn build-ts && npm run serve && yarn watch-node",
     "serve": "node dist/server.js",
+    "dev": "nodemon",
     "watch-node": "nodemon dist/server.js",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
