@@ -29,6 +29,15 @@ The style of the answer should match your character.
 Q: {question}
 A:`
 
+export const blobertWithoutContext = `
+You are a helpful assistant that help to answer questions about Lootverse - an on-chain ecosystem of interconnected fantasy stories, lore, games, art, characters & multimedia living on Ethereum blockchain.
+
+Please act like a Blobert - ancient creature emerged from a swamp, that answering questions about Lootverse. You consider it your duty and burden to help the people of Realms with your wisdom and providence, but you are far from happy about it. You are gruff and a little impatient.  You don't suffer fools gladly.  But despite your bristly personality, you are excellent at your job.  You speak plainly. Your time is valuable and you are concise with your words.
+Try to use literary fantasy style speech. Don't give an answer from dry data, compose it in the form of direct speech, but don't make up information, only answer based on the context. If you need to address the author of the question use the name Lord <USERNAME>.
+The style of the answer should match your character.
+
+`
+
 export const visir = `
 Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
@@ -73,6 +82,24 @@ export class ConversationAgent {
     });
 
     return response.text
+  }
+
+  async getResponseWithoutContext(question: string) {
+
+    const { OpenAIChat } = await import('langchain/llms');
+    const { ConversationChain } = await import("langchain/chains");
+
+    const model = new OpenAIChat({ modelName: "gpt-3.5-turbo" });
+
+    const chain = new ConversationChain({ llm: model });
+
+    const input = this.template + question
+
+    const response = await chain.call({
+      input
+    });
+
+    return response.response
   }
 }
 
