@@ -23,7 +23,7 @@ export default {
                 console.log(res)
                 return {
                     title: question,
-                    description: res.data
+                    description: res
                 };
             })
             .catch((error: any) => console.log(error));
