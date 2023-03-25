@@ -25,13 +25,13 @@ export default {
 
                 await discord_message.sendMessage({
                     title: `Blobert`,
-                    description: `${blobert_response.response}`,
+                    description: `${blobert_response.data}`,
                     thumbnail: {
                         url: 'https://media.discordapp.net/attachments/884213909106589716/1077582008143855616/AB41B2F9-A8EC-439E-83DF-76633A959BAF.png?width=599&height=899',
                     },
                 });
 
-                question = blobert_response.response;
+                question = blobert_response.data;
 
 
 
@@ -50,7 +50,7 @@ export default {
 
                 await discord_message.sendMessage({
                     title: `Gandalf`,
-                    description: `${visir_response.response}`,
+                    description: `${visir_response.data}`,
                     thumbnail: {
                         url: 'https://static.wikia.nocookie.net/lotr/images/e/e7/Gandalf_the_Grey.jpg',
                     },
@@ -58,7 +58,7 @@ export default {
 
                 key++;
 
-                response = visir_response.response;
+                response = visir_response.data;
 
             } catch (e) {
                 console.error(

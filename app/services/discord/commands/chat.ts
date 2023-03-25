@@ -11,17 +11,11 @@ export default {
                 .setDescription("Ser?")
         ),
     async execute(interaction: any) {
+
         const question = interaction.options.getString("q");
-
-        // await sqlRun()
-
         await interaction.deferReply();
 
         const chat = new ConversationAgent(blobert);
-
-        // console.log(chat)
-
-        
 
         let embed = await chat.getResponse(question)
             .then((res: any) => {
@@ -29,16 +23,15 @@ export default {
                 console.log(res)
                 return {
                     title: question,
-                    description: res
+                    description: res.data
                 };
             })
             .catch((error: any) => console.log(error));
-            
 
-            try {
-                await interaction.editReply({ embeds: [embed] });
-            } catch (e) {
-                console.log(e);
-            }
+        try {
+            await interaction.editReply({ embeds: [embed] });
+        } catch (e) {
+            console.log(e);
+        }
     },
 };
