@@ -44,3 +44,38 @@ export async function tweet(body: Cast, offset: number, random: number) {
     })
 
 }
+
+export class TwitterTweet {
+
+
+
+    async tweet(body: Cast, offset: number, random: number) {
+
+        const { default: axios } = await import('axios')
+
+
+
+
+
+    }
+
+
+
+}
+
+export class ApiPoster {
+
+    constructor() { }
+
+    public async postData(endpoint: string, data: any) {
+        const { default: axios } = await import('axios')
+
+        try {
+            const response = await axios.post('https://api.twitter.com/2/tweets', data);
+            return response;
+        } catch (error) {
+            console.error('Error posting data:', error);
+            throw error;
+        }
+    }
+}

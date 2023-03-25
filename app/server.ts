@@ -18,8 +18,6 @@ setupDiscordCommands()
 
 export const pinecone = new PineconeClient();
 
-
-
 // export const db = new Database('db.sqlite');
 
 // export const client = new PostgresClient({
