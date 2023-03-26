@@ -102,7 +102,6 @@ export class ConversationAgent {
     const chain = new ConversationChain({ llm: model });
 
     const input = this.template + question
-    console.log(input)
     const response = await chain.call({
       input
     });
