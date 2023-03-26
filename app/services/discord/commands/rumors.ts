@@ -9,7 +9,7 @@ export default {
         .setDescription("Blobert will tell you about the latest rumors on the channel")
         .addStringOption((option) =>
             option.setName("question")
-                .setDescription("Default: last summarized rumors of this channel")),
+                .setDescription("Default: Blobert will tell you about the latest rumors on the channel")),
     async execute(interaction: any) {
         const channelId = interaction.channelId
         const channelName = interaction.channel.name
