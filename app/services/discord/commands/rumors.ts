@@ -35,7 +35,7 @@ export default {
             .then((res: any) => {
 
                 return {
-                    title: `Rumors of ${channelName}.`,
+                    title: interaction.options.getString("question") ? question : `Rumors of ${channelName}.`,
                     description: res
                 };
             })
