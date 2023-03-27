@@ -37,9 +37,9 @@ export default {
                 history += `"${message.author.username}: ${message.content}"\n`
             }
         }
-        // clamp history to last 1000 symbols
-        if (history.length > 1000) {
-            history = history.slice(-1000)
+        // clamp history to  1000 symbols
+        if (history.length > 2000) {
+            history = history.slice(0, 2000)
          }
         if (question) {
             prompt += history + "\n\n"+question
