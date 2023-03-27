@@ -15,11 +15,11 @@ Agent.post('/chat', async (req: any, res: any) => {
 
     try {
         response = await chat.getResponse(question);
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     }
 
-    res.send(response);
+    res.send(JSON.stringify({ data: response }));
 });
 
 export default Agent

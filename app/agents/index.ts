@@ -77,7 +77,7 @@ export class ConversationAgent {
       { pineconeIndex: pinecone.Index("realms"), namespace: 'demo' },
     );
 
-    const model = new OpenAIChat({ modelName: "gpt-3.5-turbo" });
+    const model = new OpenAIChat({ modelName: "gpt-4" });
 
     const chain = ChatVectorDBQAChain.fromLLM(model, vectorStore, {
       returnSourceDocuments: true,

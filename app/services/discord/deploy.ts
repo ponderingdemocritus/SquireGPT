@@ -15,17 +15,13 @@ export const setupDiscordCommands = () => {
 
     const rest = new REST({ version: '10' }).setToken(discordConfig.token);
 
-    // rest.put(Routes.applicationGuildCommands(discordConfig.client_id, discordConfig.guild_id), { body: commands })
-    //     .then(() => console.log('Successfully registered application commands.'))
-    //     .catch(console.error);
-
     (async () => {
         try {
             console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
             // The put method is used to fully refresh all commands in the guild with the current set
             const data: any = await rest.put(
-                Routes.applicationGuildCommands(discordConfig.client_id, discordConfig.guild_id),
+                Routes.applicationCommands(discordConfig.client_id),
                 { body: commands },
             );
 
