@@ -24,12 +24,25 @@ export default {
         const channel = await client.channels.fetch(channelId) as any;
         const messages = await channel.messages.fetch({ limit: 100 });
         let prompt = `Here is a list of last 100 chat messages of ${channelName} channel on ${discordServerName} discord server, rely on them in your answer. Please dont mention that your answer is based on this chat messages, just act like you knew all the rumors about what was going on. Please avoid using the phrase 'Based on the chat history provided' in your response.. Messages List:\n`
+        let history = ''
         for (const [id, message] of messages) {
             id
-            prompt += `"${message.author.username}: ${message.content}"\n`
+            if (!message.conent && message.embeds.length > 0) {
+                message.embeds.forEach((embed: any) => {
+                    if (embed.data.title && embed.data.description) {
+                        history += `"${message.author.username} Bot Response: {${embed.data.title} - ${embed.data.description}}"\n`
+                    }
+                })
+            } else {
+                history += `"${message.author.username}: ${message.content}"\n`
+            }
         }
+        // clamp history to last 1000 symbols
+        if (history.length > 1000) {
+            history = history.slice(-1000)
+         }
         if (question) {
-            prompt += "\n"+question
+            prompt += history + "\n\n"+question
         }
         let embed = await chat.getResponseWithoutContext(prompt)
             .then((res: any) => {
