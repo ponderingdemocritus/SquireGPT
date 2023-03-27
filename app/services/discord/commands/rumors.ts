@@ -27,7 +27,7 @@ export default {
         let history = ''
         for (const [id, message] of messages) {
             id
-            if (!message.conent && message.embeds.length > 0) {
+            if (!message.content && message.embeds.length > 0) {
                 message.embeds.forEach((embed: any) => {
                     if (embed.data.title && embed.data.description) {
                         history += `"${message.author.username} Bot Response: {${embed.data.title} - ${embed.data.description}}"\n`
