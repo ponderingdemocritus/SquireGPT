@@ -1,14 +1,6 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import fs from "fs";
 import { discordConfig } from "../../config";
-import cron from "node-cron";
-// import listings from "./cron/listings";
-// import sales from "./cron/sales";
-import raids from "./cron/raids";
-// import tome from "./cron/tome";
-import crawl from "./cron/crawl";
-import { getPrice } from "./status/price";
-// import tome from "./cron/tome";
 
 export const client = new Client({
   intents: [
@@ -33,24 +25,8 @@ client.once("ready", async () => {
 
     const command = require(`./commands/${name}`);
 
-    // console.log(command.data.name)
     client.commands.set(command.default.data.name, command);
   }
-  // cron.schedule("*/2 * * * *", () => {
-  //   sales.execute(client);
-  // });
-  // cron.schedule("*/2 * * * *", () => {
-  //   listings.execute(client);
-  // });
-  cron.schedule("20 * * * * *", () => {
-    raids.execute(client);
-  });
-  cron.schedule("* * 1 * * *", () => {
-    crawl.execute(client);
-  });
-  cron.schedule("*/2 * * * *", async () => {
-    client.user?.setActivity(await getPrice(), { name: "WATCHING" });
-  });
 });
 
 client.on("interactionCreate", async (interaction) => {

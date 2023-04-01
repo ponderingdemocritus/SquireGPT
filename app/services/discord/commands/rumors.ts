@@ -1,15 +1,15 @@
-// import fetch from 'node-fetch';
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { blobertWithoutContext, ConversationAgent } from "../../../agents";
-import { client } from  "../index"
+import { ConversationAgent } from "../../../agents";
+import { agentConfig } from "../../../config/index";
+import { client } from "../index"
 
 export default {
     data: new SlashCommandBuilder()
         .setName("rumors")
-        .setDescription("Blobert will tell you about the latest rumors on the channel")
+        .setDescription("Tell me about the latest rumors on the channel.")
         .addStringOption((option) =>
             option.setName("question")
-                .setDescription("Default: Blobert will tell you about the latest rumors on the channel")),
+                .setDescription("Default: Summary of this channel")),
     async execute(interaction: any) {
         const channelId = interaction.channelId
         const channelName = interaction.channel.name
@@ -19,7 +19,7 @@ export default {
 
         await interaction.deferReply();
 
-        const chat = new ConversationAgent(blobertWithoutContext.replace("<USERNAME>", username));
+        const chat = new ConversationAgent(agentConfig.agentWithoutContext.replace("<USERNAME>", username));
 
         const channel = await client.channels.fetch(channelId) as any;
         const messages = await channel.messages.fetch({ limit: 100 });
@@ -40,9 +40,9 @@ export default {
         // clamp history to  1000 symbols
         if (history.length > 2000) {
             history = history.slice(0, 2000)
-         }
+        }
         if (question) {
-            prompt += history + "\n\n"+question
+            prompt += history + "\n\n" + question
         }
         let embed = await chat.getResponseWithoutContext(prompt)
             .then((res: any) => {
@@ -53,12 +53,12 @@ export default {
                 };
             })
             .catch((error: any) => console.log(error));
-            
 
-            try {
-                await interaction.editReply({ embeds: [embed] });
-            } catch (e) {
-                console.log(e);
-            }
+
+        try {
+            await interaction.editReply({ embeds: [embed] });
+        } catch (e) {
+            console.log(e);
+        }
     },
 };

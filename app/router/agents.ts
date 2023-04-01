@@ -1,17 +1,17 @@
 require('dotenv').config();
-import { blobert, ConversationAgent } from '../agents';
+import { ConversationAgent } from '../agents';
 import { Router } from 'express';
-// import client from '../services/discord';
+import { agentConfig } from '../config/index';
 
 const Agent = Router();
 
-Agent.post('/chat', async (req: any, res: any) => {
+Router().post('/chat', async (req: any, res: any) => {
 
     const { question } = req.body;
 
     let response;
 
-    const chat = new ConversationAgent(blobert);
+    const chat = new ConversationAgent(agentConfig.context);
 
     try {
         response = await chat.getResponse(question);
