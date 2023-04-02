@@ -1,4 +1,11 @@
-# SquireGPT: A Langchain and Pinecone-Powered Chatbot
+# 
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/gandalf.png">
+  <img alt="Dojo logo" align="right" width="120" src=".github/gandalf.png">
+</picture>
+
+## SquireGPT: A Langchain and Pinecone-Powered Chatbot
 
 Squire is a versatile chatbot that leverages the power of Langchain and Pinecone's advanced indexing capabilities to deliver an efficient and seamless conversational experience. At present, Squire supports interaction through various channels, including Discord, Command Line Interface (CLI), and RESTful API. 
 
