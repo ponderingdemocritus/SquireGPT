@@ -61,8 +61,31 @@ PINECONE_API_KEY=<YOUR_API_KEY>
 
 1. Get your OpenAI API key from the OpenAI dashboard and save in your `.env`
 
+### 4. Discord Setup
 
-### 4. Running CLI
+Create a new Discord App by following these steps:
+
+1. Go to the Discord Developer Portal.
+2. Sign in with your Discord account or sign up if you don't have one.
+3. Click the "New Application" button in the top-right corner.
+4. Enter a name for your app and click "Create".
+
+Retrieve the necessary Discord details from the dashboard and securely store them in your project's .env file:
+
+1. Navigate to the "Bot" tab on the left sidebar within your app's settings.
+2. Click "Add Bot" and confirm the action.
+3. Find the "TOKEN" section, and click "Copy" to copy the bot token.
+4. Go back to the "General Information" tab and locate the "CLIENT ID" section. Copy the client ID.
+5. In your project folder, locate the .env file (create one if it doesn't exist).
+6. Add the following lines, replacing <YOUR_BOT_TOKEN> and <YOUR_CLIENT_ID> with the respective values you copied:
+
+```bash
+DISCORD_TOKEN=<YOUR_BOT_TOKEN>
+DISCORD_CLIENT_ID=<YOUR_CLIENT_ID>
+```
+7. Save the changes made to the .env file.
+
+### 5. Running CLI
 Install the required dependencies for your project, if you haven't already.
 
 ```bash
@@ -91,32 +114,8 @@ yarn start
 export NODE_TLS_REJECT_UNAUTHORIZED='0'
 export NODE_OPTIONS='--experimental-fetch'
 ```
-### 5. Deploying
-Deploy anywhere you can run a Docker instance! 
-
-### 6. Discord Setup
-
-Create a new Discord App by following these steps:
-
-1. Go to the Discord Developer Portal.
-2. Sign in with your Discord account or sign up if you don't have one.
-3. Click the "New Application" button in the top-right corner.
-4. Enter a name for your app and click "Create".
-
-Retrieve the necessary Discord details from the dashboard and securely store them in your project's .env file:
-
-1. Navigate to the "Bot" tab on the left sidebar within your app's settings.
-2. Click "Add Bot" and confirm the action.
-3. Find the "TOKEN" section, and click "Copy" to copy the bot token.
-4. Go back to the "General Information" tab and locate the "CLIENT ID" section. Copy the client ID.
-5. In your project folder, locate the .env file (create one if it doesn't exist).
-6. Add the following lines, replacing <YOUR_BOT_TOKEN> and <YOUR_CLIENT_ID> with the respective values you copied:
-
-```bash
-DISCORD_TOKEN=<YOUR_BOT_TOKEN>
-DISCORD_CLIENT_ID=<YOUR_CLIENT_ID>
-```
-7. Save the changes made to the .env file.
+### 6. Deploying
+Deploy anywhere you can run Docker! 
 
 ### Adding to Discord server
 
