@@ -4,6 +4,7 @@ import express from 'express';
 import ApiRouter from './router'
 import { client as DiscordClient } from './services/discord';
 import { setupDiscordCommands } from './services/discord/deploy';
+import { startReadline } from './cli';
 
 const app = express();
 const port = 3000;
@@ -16,7 +17,7 @@ export const pinecone = new PineconeClient();
 async function main(): Promise<void> {
     await pinecone.init({
         environment: process.env.PINECONE_ENVIROMENT || "us-central1-gcp",
-        apiKey: process.env.PINECONE_KEY || "",
+        apiKey: process.env.PINECONE_API_KEY || "",
     });
 }
 
@@ -26,6 +27,10 @@ app.use(express.json());
 
 app.use("/", ApiRouter)
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`⚡️ Running on ${port}.`);
 });
+
+if (process.argv.includes('--cli')) {
+    startReadline(server);
+}

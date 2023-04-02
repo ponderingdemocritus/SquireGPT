@@ -17,12 +17,10 @@ export const setupDiscordCommands = () => {
 
     (async () => {
         try {
-            console.log(`Started refreshing ${commands.length} application (/) commands.`);
-            const data: any = await rest.put(
+            await rest.put(
                 Routes.applicationCommands(discordConfig.client_id),
                 { body: commands },
             );
-            console.log(`Successfully reloaded ${data.length} application (/) commands.`);
         } catch (error) {
             console.error(error);
         }

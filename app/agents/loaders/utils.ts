@@ -1,26 +1,22 @@
 require('dotenv').config();
-import { PineconeClient } from '@pinecone-database/pinecone';
+import { pinecone } from '../../server';
 
 export const embed = async (docs: any) => {
 
     const { OpenAIEmbeddings } = await import("langchain/embeddings");
     const { PineconeStore } = await import("langchain/vectorstores");
-    const pinecone = new PineconeClient();
-
-    await pinecone.init({
-        environment: process.env.PINECONE_ENVIROMENT || "us-central1-gcp",
-        apiKey: process.env.PINECONE_KEY || "",
-    });
 
     try {
         // 
         console.log('creating vector store...', docs);
+
+        console.log('process.env.PINECONE_INDEX', process.env.PINECONE_INDEX );
         await PineconeStore.fromDocuments(
             docs,
             new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
             {
-                pineconeIndex: pinecone.Index(process.env.PINECONE_INDEX_NAME || ''),
-                namespace: process.env.PINECONE_NAME_SPACE,
+                pineconeIndex: pinecone.Index(process.env.PINECONE_INDEX || ''),
+                namespace: process.env.PINECONE_NAMESPACE,
             }
         );
 
@@ -43,7 +39,8 @@ export const processDocuments = async (dirPath: string) => {
                 ".txt": (path) => new TextLoader(path),
                 ".csv": (path) => new CSVLoader(path, "text"),
                 ".pdf": (path) => new PDFLoader(path),
-                ".md": (path) => new TextLoader(path)
+                ".md": (path) => new TextLoader(path),
+                ".adoc": (path) => new TextLoader(path)
             }
         );
 
