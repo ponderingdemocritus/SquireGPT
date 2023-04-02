@@ -39,7 +39,6 @@ You can choose to edit the personality of the agent by changing the context with
 
     - Dimensions: 1536
     - Metric: Cosine
-    - Retrieve your API key and securely store it in your project's .env file:
 
 2. From the Pinecone dashboard, click API Keys
 4. Copy the API key, or create a new one if needed.
@@ -63,9 +62,7 @@ Install the required dependencies for your project, if you haven't already.
 yarn
 ```
 
-1. Open a terminal/command prompt and navigate to your project directory.
-
-2. Start your local instance by running the appropriate command for your project.
+1. Start your local instance by running the appropriate command for your project.
 
 ```
 yarn cli
