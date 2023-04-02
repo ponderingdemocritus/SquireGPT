@@ -20,13 +20,15 @@ Todo:
 - [ ] Load documents via web loader
 - [ ] One-click deploy
 
-# Getting started
+# Getting Started
 
-## 1. Getting started
+## 1. Setup enviroment and customise Agent
 
 ```bash
 cp example.env .env
 ```
+
+You can choose to edit the personality of the agent by changing the context within the config file. The default is Gandalf.
 
 ### 2. Setup Pinecone
 
@@ -48,10 +50,6 @@ cp example.env .env
 PINECONE_API_KEY=<YOUR_API_KEY>
 ```
 10. Save the changes made to the .env file.
-
-
-
-
 
 ### 3. Open AI Setup
 
