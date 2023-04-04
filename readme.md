@@ -7,6 +7,20 @@
 
 ## SquireGPT: A Langchain and Pinecone-Powered Chatbot
 
+
+- [Getting Started](#getting-started)
+  - [1. Setup environment and customize Agent](#1-setup-environment-and-customize-agent)
+  - [2. Setup Pinecone](#2-setup-pinecone)
+  - [3. Open AI Setup](#3-open-ai-setup)
+  - [4. Discord Setup](#4-discord-setup)
+  - [5. Running CLI](#5-running-cli)
+  - [6. Deploying](#6-deploying)
+  - [Adding to Discord server](#adding-to-discord-server)
+- [How To](#how-to)
+  - [Add Discord slash command](#add-discord-slash-command)
+  - [Run Babyagi](#run-babyagi)
+- [FAQ](#faq)
+
 Squire is a versatile chatbot that leverages the power of Langchain and Pinecone's advanced indexing capabilities to deliver an efficient and seamless conversational experience. At present, Squire supports interaction through various channels, including Discord, Command Line Interface (CLI), and RESTful API. 
 
 With Squire, you can effortlessly index documents into a Pinecone index, enabling you to chat about the contents of these documents within Discord or retrieve relevant information through the API. 
@@ -138,14 +152,18 @@ Use the auth builder link within the discord dashboard. When adding to discord m
 5. Run!
 
 
-## Tasker - fork of Babyagi
+## Run Babyagi
 
-Create a table in Pinecone add add it to `.env` TASKER_TABLE
+Fork of [Babyagi](https://github.com/yoheinakajima/babyagi)
+
+Create a table in Pinecone and add `TASKER_TABLE=` to your .env
+
+Then:
 
 ```bash
 yarn cli
 
-# Select tasker
+# Select Babyagi
 ```
 
 ---

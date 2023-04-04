@@ -13,7 +13,7 @@ export async function startReadline(server: any) {
             choices: [
                 { name: '1', message: '1. Load documents via directory' },
                 { name: '2', message: '2. Chat with agent' }, // Add this line
-                { name: '3', message: '4. Tasker' }, // Add this line
+                { name: '3', message: '4. Babyagi' }, // Add this line
                 { name: '4', message: '3. Kill server' }, // Add this line
             ],
         });
