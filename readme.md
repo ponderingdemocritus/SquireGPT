@@ -54,6 +54,10 @@ You can choose to edit the personality of the agent by changing the context with
 
 ```bash
 PINECONE_API_KEY=<YOUR_API_KEY>
+PINECONE_INDEX="test" // you only need the name here not the entire string
+PINECONE_NAMESPACE="demo" // optional namespace
+PINECONE_ENVIROMENT="us-central1-gcp"
+
 ```
 10. Save the changes made to the .env file.
 
@@ -132,6 +136,9 @@ Use the auth builder link within the discord dashboard. When adding to discord m
 3. Add a name to the function in the exports
 4. Complete the logic
 5. Run!
+
+
+## Tasker - fork of Babyagi
 
 ---
 

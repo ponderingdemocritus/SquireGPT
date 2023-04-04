@@ -8,7 +8,7 @@ export class ConversationAgent {
   }
 
   async getResponse(question: string) {
-    const { OpenAIChat } = await import('langchain/llms');
+    const { OpenAI } = await import('langchain/llms');
     const { OpenAIEmbeddings } = await import("langchain/embeddings");
     const { PineconeStore } = await import("langchain/vectorstores");
     const { ChatVectorDBQAChain } = await import("langchain/chains");
@@ -18,7 +18,7 @@ export class ConversationAgent {
       { pineconeIndex: pinecone.Index(process.env.PINECONE_INDEX || ""), namespace: process.env.PINECONE_NAMESPACE },
     );
 
-    const model = new OpenAIChat({ modelName: process.env.OPENAI_MODEL });
+    const model = new OpenAI({ modelName: process.env.OPENAI_MODEL });
 
     const chain = ChatVectorDBQAChain.fromLLM(model, vectorStore, {
       returnSourceDocuments: true,
@@ -35,10 +35,10 @@ export class ConversationAgent {
 
   async getResponseWithoutContext(question: string) {
 
-    const { OpenAIChat } = await import('langchain/llms');
+    const { OpenAI } = await import('langchain/llms');
     const { ConversationChain } = await import("langchain/chains");
 
-    const model = new OpenAIChat({ modelName: process.env.OPENAI_MODEL });
+    const model = new OpenAI({ modelName: process.env.OPENAI_MODEL });
 
     const chain = new ConversationChain({ llm: model });
 

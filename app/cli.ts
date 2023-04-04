@@ -2,6 +2,7 @@ import { prompt } from 'enquirer';
 import { ConversationAgent } from './agents/index';
 import { processDocuments } from './agents/loaders/utils';
 import { agentConfig } from './config/index';
+import { runTask } from './agents/tasker';
 
 export async function startReadline(server: any) {
     while (true) {
@@ -12,7 +13,8 @@ export async function startReadline(server: any) {
             choices: [
                 { name: '1', message: '1. Load documents via directory' },
                 { name: '2', message: '2. Chat with agent' }, // Add this line
-                { name: '3', message: '3. Kill server' }, // Add this line
+                { name: '3', message: '4. Tasker' }, // Add this line
+                { name: '4', message: '3. Kill server' }, // Add this line
             ],
         });
 
@@ -62,6 +64,16 @@ async function processCommand(command: string, server: any): Promise<boolean> {
             console.log(`----------------------------------------`);
             break;
         case '3':
+            const objective = await prompt<{ message: string }>({
+                type: 'input',
+                name: 'message',
+                message: 'What would you like to solve?',
+            });
+            await runTask(objective.message)
+
+            break;
+
+        case '4':
             console.log('Stopping the server...');
             server.close(() => {
                 console.log('Server stopped.');

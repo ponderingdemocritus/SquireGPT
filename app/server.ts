@@ -5,13 +5,17 @@ import ApiRouter from './router'
 import { client as DiscordClient } from './services/discord';
 import { setupDiscordCommands } from './services/discord/deploy';
 import { startReadline } from './cli';
+import { discordConfig } from './config';
 
 const app = express();
 const port = 3000;
 
-DiscordClient
+if (discordConfig.token){
+    DiscordClient
+    setupDiscordCommands()
+} 
 
-setupDiscordCommands()
+
 
 export const pinecone = new PineconeClient();
 async function main(): Promise<void> {
