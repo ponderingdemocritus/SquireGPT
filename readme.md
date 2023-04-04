@@ -140,6 +140,14 @@ Use the auth builder link within the discord dashboard. When adding to discord m
 
 ## Tasker - fork of Babyagi
 
+Create a table in Pinecone add add it to `.env` TASKER_TABLE
+
+```bash
+yarn cli
+
+# Select tasker
+```
+
 ---
 
 ## FAQ

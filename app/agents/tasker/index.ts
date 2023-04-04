@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { ConversationAgent } from "..";
 import { pinecone } from "../../server";
 
@@ -6,9 +7,7 @@ type Task = {
     task_name: string;
 };
 
-let YOUR_TABLE_NAME = "test-table";
-
-let table_name: any = YOUR_TABLE_NAME;
+let table_name: any = process.env.TASKER_TABLE;
 
 async function get_ada_embedding(text: string): Promise<number[]> {
     const { OpenAIEmbeddings } = await import("langchain/embeddings");
@@ -27,6 +26,8 @@ async function task_creation_agent(objective: string, result: any, task_descript
     let response = await agent.getResponseWithoutContext("")
 
     const tasks = JSON.parse(response.match(/(\[.*\])/)[0]);
+
+    // let new_tasks = response.choices[0].text.trim().split("\n");
 
     return tasks.map((task_name: Task, index: string) => ({ task_id: index, task_name: task_name }));
 }
@@ -56,7 +57,7 @@ async function prioritization_agent(objective: string, task_list: Task[], this_t
 }
 
 async function execution_agent(objective: string, task: string): Promise<string> {
-    let context = await context_agent(objective, YOUR_TABLE_NAME, 5);
+    let context = await context_agent(objective, table_name, 5);
 
     let prompt = `You are an AI who performs one task based on the following objective: ${objective}.\nTake into account these previously completed tasks: ${context.join(", ")}\nYour task: ${task}\nResponse: `
 

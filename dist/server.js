@@ -11,10 +11,13 @@ const router_1 = __importDefault(require("./router"));
 const discord_1 = require("./services/discord");
 const deploy_1 = require("./services/discord/deploy");
 const cli_1 = require("./cli");
+const config_1 = require("./config");
 const app = (0, express_1.default)();
 const port = 3000;
-discord_1.client;
-(0, deploy_1.setupDiscordCommands)();
+if (config_1.discordConfig.token) {
+    discord_1.client;
+    (0, deploy_1.setupDiscordCommands)();
+}
 exports.pinecone = new pinecone_1.PineconeClient();
 async function main() {
     await exports.pinecone.init({
